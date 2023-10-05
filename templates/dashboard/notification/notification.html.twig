@@ -1,0 +1,69 @@
+{% extends 'dashboard/themes/base.html.twig' %}
+
+{% block title %}NOTIFICATIONS |
+	{{APP_NAME}}
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<h4 class="page-title">Notification</h4>
+				</div>
+			</div>
+		</div>
+		<!-- end page title -->
+
+		<div
+			class="row">
+
+			<!-- Right Sidebar -->
+			<div class="col-12">
+				<div class="card">
+					<div
+						class="card-body">
+						<!-- Left sidebar -->
+						<div class="page-aside-left">
+							<div class="email-menu-list mt-3">
+								<a href="javascript: void(0);" class="text-danger fw-bold">
+									<i class="dripicons-inbox me-2"></i>Tous les notifications<span class="badge badge-danger-lighten float-end ms-2">{{getAllNotifs.getCountAllNotifications|length}}</span>
+								</a>
+							</div>
+						</div>
+						<!-- End Left sidebar -->
+
+						<div class="page-aside-right">
+							{% for notification in getAllNotifs.getCountAllNotifications %}
+								<div class="mt-3">
+									<p>
+										<b>Vous avez un nouveau message</b>
+										{% if notification.isRead == 0 %}
+											<span class="badge bg-danger rounded-pill">Non lu</span>
+										{% else %}
+											<span class="badge bg-success rounded-pill">Lu</span>
+										{% endif %}
+										<br>
+										{{notification.message}}<br>
+										Envoyer le
+										{{notification.datecreation|date('d/m/Y')}}
+										à
+										{{notification.datecreation|date('H:i:s')}}</p>
+									<hr>
+								</div>
+								<!-- end .mt-4 -->
+							{% endfor %}
+						</div>
+						<!-- end inbox-rightbar-->
+					</div>
+
+					<div class="clearfix"></div>
+				</div>
+				<!-- end card-box -->
+
+			</div>
+			<!-- end Col -->
+		</div>
+		<!-- End row -->
+	</div>
+{% endblock %}

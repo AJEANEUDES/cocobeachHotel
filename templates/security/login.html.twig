@@ -1,0 +1,52 @@
+{% extends 'security/base.html.twig' %}
+
+{% block title %}
+	CONNEXION |
+	{{APP_NAME}}
+{% endblock %}
+
+{% block body %}
+	<div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-xxl-4 col-lg-5">
+					<div class="card">
+
+						<div class="card-header pt-4 pb-4 text-center bg-default">
+							<a href="{{path('login')}}">
+								<span><img src="{{asset('assets/images/logo-coco-beach.jpeg')}}" alt="Logo de coco beach" height="55"></span>
+							</a>
+						</div>
+
+						<div class="card-body p-4">
+							<div class="text-center w-75 m-auto">
+								<h4 class="text-dark-50 text-center pb-0 fw-bold">AUTHENTIFIEZ-VOUS</h4>
+								<p class="text-muted mb-4">Entrer votre email et mot de passe pour avoir acces a l'interface admin.</p>
+							</div>
+							{{ form_start(form) }}
+							<div class="mb-3">
+								<label for="email_utilisateur" class="form-label">Email</label>
+								{{ form_row(form.email_utilisateur) }}
+							</div>
+
+							<div class="mb-3">
+								<label for="password" class="form-label">Mot de passe</label>
+								{{ form_row(form.password) }}
+							</div>
+							<div class="mb-3 mb-0 text-center">
+								<button type="submit" style="background: #1CC3B2;color: #ffffff;" class="btn btn-lg">Se connecter</button>
+							</div>
+							{{ form_end(form) }}
+						</div>
+						<!-- end card-body -->
+					</div>
+					<!-- end card -->
+				</div>
+				<!-- end col -->
+			</div>
+			<!-- end row -->
+		</div>
+		<!-- end container -->
+	</div>
+	<!-- end page -->
+{% endblock %}

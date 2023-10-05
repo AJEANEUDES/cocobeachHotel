@@ -1,0 +1,77 @@
+{% extends 'website/themes/base.html.twig' %}
+{% block title %}RESTAURANT |
+	{{APP_NAME}}
+{% endblock %}
+{% block body %}
+	<!-- Breadcrumb Area Start -->
+	<div class="breadcrumb-area contact-breadcrumb bg-img bg-overlay jarallax" style="background-image: url({{asset('web/img/poissons.png')}});">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="breadcrumb-content text-center mt-100">
+						<h2 class="page-title">Restaurant</h2>
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb justify-content-center">
+								<li class="breadcrumb-item">
+									<a href="{{path('index')}}">Accueil</a>
+								</li>
+								<li class="breadcrumb-item active" aria-current="page">Restaurant</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Breadcrumb Area End -->
+
+	<!-- Blog Area Start -->
+	<section class="roberto-blog-area section-padding-100-0">
+		<div class="container">
+			<div
+				class="row">
+				<!-- Section Heading -->
+				<div class="col-12">
+					<div class="section-heading text-center wow fadeInUp" data-wow-delay="100ms">
+						<h6>Hôtel Coco Beach</h6>
+						<h2>Restaurant</h2>
+					</div>
+				</div>
+			</div>
+
+			<div id="menu-list" class="section-padding">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12 text-center" id="menu-flters">
+							<ul>
+								<li>
+									<a href="{{path('restaurant')}}" class="filter {% if app.request.get('_route') == 'restaurant' %} active {% endif %}" data-filter=".menu-restaurant">Voir Tout</a>
+								</li>
+								{% for type in types %}
+									<li>
+										<a href="{{path('rechercher-restaurant', {id: type.id})}}" class="filter {% if app.request.get('_route') == 'rechercher-restaurant/{type.nommenu}' %} active {% endif %}" data-filter=".les_liqueurs">{{type.nommenu}}</a>
+									</li>
+								{% endfor %}
+							</ul>
+						</div>
+
+						<div class="menu-wrapper">
+							{% for restaurant in restaurants %}
+								<div class="les_liqueurs menu-restaurant">
+									<span class="clearfix">
+										<a href="#" class="menu-title" data-meal-img="">{{restaurant.nomplat}}</a>
+										<span style="left: 166px;right: 44px;" class="menu-line"></span>
+										<span class="menu-price">{{restaurant.prixplat}}
+											FCFA</span>
+									</span>
+									<span class="menu-subtitle"></span>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Blog Area End -->
+{% endblock %}

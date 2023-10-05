@@ -1,0 +1,374 @@
+{% extends 'dashboard/themes/base.html.twig' %}
+
+{% block title %}RESERVATIONS |
+	{{APP_NAME}}
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<div class="page-title-right">
+						<a class="btn btn-primary btn-lg" href="{{path('reservations.create')}}">Creer une reservation</a>
+					</div>
+					<h4 class="page-title">Gestion des reservations</h4>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="header-title" style="text-align: center;margin: 20px 0 10px 0;font-size: 25px;">Liste des reservations</h4>
+						<table id="basic-datatable" class="table dt-responsive nowrap w-100">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>CHAMBRE</th>
+									<th>CLIENT</th>
+									<th>DATE D'ARRIVEE</th>
+									<th>DUREE</th>
+									<th>DATE DE DEPART</th>
+									<th>ETAT</th>
+									<th>DATE CREATION</th>
+									<th>ACTIONS</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for reservation in reservations %}
+									<tr>
+										<td>{{loop.index}}</td>
+										<td>
+											{% if reservation.chambre.libellechambre %}
+												{{reservation.chambre.libellechambre}}
+											{% endif %}
+										</td>
+										<td>{{reservation.client.nomclient}}
+											{{reservation.client.prenomclient}}</td>
+										<td>{{reservation.datearrivee}}</td>
+										{% if reservation.dureetotal %}
+											{% if reservation.dureetotal <= 1 %}
+												<td>{{reservation.dureetotal}}
+													Jour</td>
+											{% else %}
+												<td>{{reservation.dureetotal}}
+													Jours</td>
+											{% endif %}
+										{% else %}
+											{% if reservation.dureereservation <= 1 %}
+												<td>{{reservation.dureereservation}}
+													Jour</td>
+											{% else %}
+												<td>{{reservation.dureereservation}}
+													Jours</td>
+											{% endif %}
+										{% endif %}
+										{% if reservation.newdatedepart %}
+											<td>{{reservation.newdatedepart}}</td>
+										{% else %}
+											<td>{{reservation.datedepart}}</td>
+										{% endif %}
+										<td style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#update-etat-reservation-{{reservation.id}}">
+											{% if reservation.etatreservation == 0 %}
+												<span class="badge bg-danger rounded-pill">ANNULEE</span>
+											{% elseif reservation.etatreservation == 1 %}
+												<span class="badge bg-warning rounded-pill">EN ATTENTE</span>
+											{% elseif reservation.etatreservation == 2 %}
+												<span class="badge bg-success rounded-pill">CONFIRMEE</span>
+											{% elseif reservation.etatreservation == 4 %}
+												<span class="badge bg-primary rounded-pill">TERMINEE</span>
+											{% endif %}
+										</td>
+										<td>
+											{{reservation.datecreation|date('d/m/Y')}}
+											à
+											{{reservation.datecreation|date('H:s:i')}}
+										</td>
+										<td>
+											<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#info-reservation-{{reservation.id}}">
+												<i style="color: #fff;" class="mdi mdi-eye"></i>
+											</button>
+
+											<a href="{{path('reservations.facture', {id: reservation.id})}}" class="btn btn-warning">
+												<i style="color: #fff;" class="mdi mdi-printer"></i>
+											</a>
+
+											<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ajuster-reservation-{{reservation.id}}">
+												<i style="color: #fff;" class="mdi mdi-pencil"></i>
+											</button>
+
+											<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-reservation-{{ reservation.id }}">
+												<i class="mdi mdi-delete"></i>
+											</button>
+										</td>
+									</tr>
+
+									<div class="modal fade" id="delete-reservation-{{ reservation.id }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-md">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="mySmallModalLabel">SUPPRESSION D'UNE RESERVATION</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+												</div>
+												<div class="modal-body">
+													<div class="row">
+														<div class="col-md-12 mb-2">
+															Etes vous sur de vouloir supprimer cette reservation ?
+														</div>
+														<div class="col-md-8"></div>
+														<div class="col-md-4">
+															<form id="" method="POST" action="{{path('reservations.delete', {id: reservation.id})}}" style="display: inline-block;">
+																<div class="row">
+																	<div class="col-md-12 text-center mt-3">
+																		<button type="submit" class="btn btn-danger">Supprimer</button>
+																	</div>
+																</div>
+															</form>
+														</div>
+													</div>
+
+												</div>
+
+											</div>
+										</div>
+									</div>
+
+									<div class="modal fade task-modal-content" id="ajuster-reservation-{{reservation.id}}" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-md">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="NewTaskModalLabel">AJUSTER UNE RESERVATION</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<form id="create-reservation" action="{{path('reservations.ajuster', {id: reservation.id})}}" method="POST">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="mb-3">
+																	<label for="date_ajuster" class="form-label">Nouvelle Date De Depart</label>
+																	<input type="date" id="date_arrivee" name="date_arrivee" hidden value="{{reservation.datearrivee}}">
+																	<input type="date" id="date_ajuster" name="date_ajuster" class="form-control form-control-lg" data-date-container="#datepicker2">
+																</div>
+															</div>
+														</div>
+														<div class="text-end">
+															<button type="submit" class="btn btn-primary btn-lg">Modifier</button>
+														</div>
+													</form>
+												</div>
+											</div>
+											<!-- /.modal-content -->
+										</div>
+										<!-- /.modal-dialog -->
+									</div>
+
+									<div class="modal fade task-modal-content" id="info-reservation-{{reservation.id}}" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-md">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="NewTaskModalLabel">INFORMATION D'UNE RESERVATION</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<div class="card text-center">
+														<div class="card-body">
+															<div class="text-start mt-3">
+																<h4 class="text-muted mb-2">
+																	<strong>Chambre :</strong>
+																	<span class="ms-2">{{reservation.chambre.libellechambre}}</span>
+																	|
+																	<strong>Numero :</strong>
+																	<span class="ms-2">{{reservation.chambre.matriculechambre}}</span>
+																</h4>
+																<h4 class="text-muted mb-1">
+																	<strong>Client :</strong>
+																	<span class="ms-2">{{reservation.client.nomclient}}
+																		{{reservation.client.prenomclient}}</span>
+																</h4>
+																<h4 class="text-muted mb-1">
+																	<strong>Date d'arrivée :</strong>
+																	<span class="ms-2">{{reservation.datearrivee}}</span>
+																</h4>
+															</div>
+															<h4 class="mb-1">---------------- Reservation Initiale ---------------</h4>
+															<div class="text-start mt-3">
+																<h4 class="text-muted mb-1">
+																	<strong>Duree du sejour :</strong>
+																	<span class="ms-2">
+																		{% if reservation.dureereservation <= 1 %}
+																			{{reservation.dureereservation}}
+																			Jour
+																		{% else %}
+																			{{reservation.dureereservation}}
+																			Jours
+																		{% endif %}
+																	</span>
+																</h4>
+																<h4 class="text-muted mb-1">
+																	<strong>Date de depart :</strong>
+																	<span class="ms-2">{{reservation.datedepart}}</span>
+																</h4>
+																<h4 class="text-muted mb-2">
+																	<strong>Operateur :</strong>
+																	<span class="ms-2">{{reservation.utilisateur.nomutilisateur}}
+																		{{reservation.utilisateur.prenomutilisateur}}</span>
+																</h4>
+																<h4 class="text-muted mb-1">
+																	<strong>Date de creation :</strong>
+																	<span class="ms-2">{{reservation.datecreation|date('d/m/Y')}}
+																		à
+																		{{reservation.datecreation|date('H:i:s')}}</span>
+																</h4>
+																{% if reservation.newdateajuster %}
+																	<h4 class="mb-1 mt-3">---------------- Apres Ajustement ---------------</h4>
+																	<h4 class="text-muted mb-1">
+																		<strong>Duree du sejour :</strong>
+																		<span class="ms-2">
+																			{% if reservation.newduree <= 1 %}
+																				{{reservation.newduree}}
+																				Jour
+																			{% else %}
+																				{{reservation.newduree}}
+																				Jours
+																			{% endif %}
+																		</span>
+																	</h4>
+																	<h4 class="text-muted mb-1">
+																		<strong>Date de depart :</strong>
+																		<span class="ms-2">{{reservation.newdatedepart}}</span>
+																	</h4>
+																	<h4 class="text-muted mb-2">
+																		<strong>Operateur :</strong>
+																		<span class="ms-2">{{reservation.utilisateur.nomutilisateur}}
+																			{{reservation.utilisateur.prenomutilisateur}}</span>
+																	</h4>
+																	<h4 class="text-muted mb-1">
+																		<strong>Date de creation :</strong>
+																		<span class="ms-2">{{reservation.datemodifier|date('d/m/Y')}}
+																			à
+																			{{reservation.datemodifier|date('H:i:s')}}
+																		</span>
+																	</h4>
+																	------------------------------------------------------
+																	<h4 class="text-muted mb-1">
+																		<strong>Duree total du sejour:</strong>
+																		<span class="ms-2">
+																			{% if reservation.dureetotal <= 1 %}
+																				{{reservation.dureetotal}}
+																				Jour
+																			{% else %}
+																				{{reservation.dureetotal}}
+																				Jours
+																			{% endif %}
+																		</span>
+																	</h4>
+																{% endif %}
+
+															</div>
+														</div>
+														<!-- end card-body -->
+													</div>
+													<!-- end card -->
+												</div>
+											</div>
+											<!-- /.modal-content -->
+										</div>
+										<!-- /.modal-dialog -->
+									</div>
+
+									<div class="modal fade task-modal-content" id="update-chambre-reservation-{{reservation.id}}" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-md">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="NewTaskModalLabel">MODIFICATION D'UNE RESERVATION</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<form id="create-chambre" action="{{path('reservations.update', {id: reservation.id})}}" method="POST">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="mb-3">
+																	<label for="chambre" class="form-label">Selectionnez la chambre<span style="font-size: 18px;color: red;">*</span>
+																	</label>
+																	<select id="chambre" name="chambre" class="form-control form-control-lg">
+																		<option disabled selected>-- Chambre --</option>
+																		{% for chambre in chambres %}
+																			<option value="{{chambre.id}}">{{chambre.libellechambre}}-{{chambre.matriculechambre}}</option>
+																		{% endfor %}
+																	</select>
+																</div>
+															</div>
+														</div>
+														<div class="text-end">
+															<button type="submit" class="btn btn-primary btn-lg">Modifier</button>
+														</div>
+													</form>
+												</div>
+											</div>
+											<!-- /.modal-content -->
+										</div>
+										<!-- /.modal-dialog -->
+									</div>
+
+									<div class="modal fade task-modal-content" id="update-etat-reservation-{{reservation.id}}" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-md">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="NewTaskModalLabel">MODIFICATION D'UNE RESERVATION</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<form id="create-chambre" action="{{path('reservations.update', {id: reservation.id})}}" method="POST">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="mb-3">
+																	<label for="etat" class="form-label">Selectionnez le status</label>
+																	<select id="etat" name="etat" class="form-control form-control-lg" required>
+																		{% if reservation.etatreservation == 0 %}
+																			<option value="1">EN ATTENTE</option>
+																			<option value="2">CONFIRMEE</option>
+																			<option value="4">TERMINEE</option>
+																			<option value="0" selected>ANNULEE</option>
+																		{% elseif reservation.etatreservation == 1 %}
+																			<option value="1" selected>EN ATTENTE</option>
+																			<option value="2">CONFIRMEE</option>
+																			<option value="4">TERMINEE</option>
+																			<option value="0">ANNULEE</option>
+																		{% elseif reservation.etatreservation == 2 %}
+																			<option value="1">EN ATTENTE</option>
+																			<option value="2" selected>CONFIRMEE</option>
+																			<option value="4">TERMINEE</option>
+																			<option value="0">ANNULEE</option>
+																		{% elseif reservation.etatreservation == 4 %}
+																			<option value="1">EN ATTENTE</option>
+																			<option value="2">CONFIRMEE</option>
+																			<option value="4" selected>TERMINEE</option>
+																			<option value="0">ANNULEE</option>
+																		{% endif %}
+																	</select>
+																</div>
+															</div>
+														</div>
+														<div class="text-end">
+															<button type="submit" class="btn btn-primary btn-lg">Modifier</button>
+														</div>
+													</form>
+												</div>
+											</div>
+											<!-- /.modal-content -->
+										</div>
+										<!-- /.modal-dialog -->
+									</div>
+								{% endfor %}
+							</tbody>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		{# {% include "dashboard/reservation/liste_reservation_online.html.twig" %} #}
+	</div>
+</div></div>{% endblock %}

@@ -1,0 +1,208 @@
+<div
+	class="leftside-menu">
+
+	{# <a href="#" style="font-size: 20px;font-weight: 600;" class="logo text-center logo-light">
+			LOGO
+		</a> #}
+	<ul class="side-nav" style="margin-top: -45px;">
+
+		<li class="side-nav-item">
+			<a href="{{path('admin')}}" class="side-nav-link">
+				<i class="uil-home-alt"></i>
+				<span>
+					Tableau de bord
+				</span>
+			</a>
+		</li>
+
+		<li class="side-nav-title side-nav-item">GESTION DES CHAMBRES</li>
+		<li class="side-nav-item">
+			<a href="{{path('categories.create')}}" class="side-nav-link">
+				<i class="mdi mdi-plus"></i>
+				<span>
+					Ajouter une categorie
+				</span>
+			</a>
+		</li>
+
+		<li class="side-nav-item">
+			<a href="{{path('chambres.create')}}" class="side-nav-link">
+				<i class="mdi mdi-plus"></i>
+				<span>
+					Ajouter une chambre
+				</span>
+			</a>
+		</li>
+
+		<li class="side-nav-item">
+			<a href="{{path('chambres.get')}}" class="side-nav-link">
+				<i class="mdi mdi-plus"></i>
+				<span>
+					Liste des chambres
+				</span>
+			</a>
+		</li>
+
+		<li class="side-nav-title side-nav-item">GESTION DES RESERVATIONS</li>
+		<li class="side-nav-item">
+			<a href="{{path('reservations.create')}}" class="side-nav-link">
+				<i class="mdi mdi-plus"></i>
+				<span>
+					Faire une reservation
+				</span>
+			</a>
+		</li>
+		<li class="side-nav-item">
+			<a href="{{path('reservations.get')}}" class="side-nav-link">
+				<i class="mdi mdi-plus"></i>
+				<span>
+					Liste des reservations
+				</span>
+			</a>
+		</li>
+		<li class="side-nav-item">
+			<a href="{{path('onlines.get')}}" class="side-nav-link">
+				<i class="mdi mdi-plus"></i>
+				<span>
+					Reservations en ligne
+				</span>
+			</a>
+		</li>
+
+		<li class="side-nav-title side-nav-item">GESTION DES SERVICES</li>
+		<li class="side-nav-item">
+			<a href="{{path('services.create')}}" class="side-nav-link">
+				<i class="mdi mdi-plus"></i>
+				<span>
+					Ajouter un service
+				</span>
+			</a>
+		</li>
+		<li class="side-nav-item">
+			<a href="{{path('services.get')}}" class="side-nav-link">
+				<i class="mdi mdi-plus"></i>
+				<span>
+					Liste des services
+				</span>
+			</a>
+		</li>
+
+		<li class="side-nav-item">
+			<a href="{{path('restaurants.get')}}" class="side-nav-link">
+				<i class="mdi mdi-plus"></i>
+				<span>
+					Restaurant
+				</span>
+			</a>
+		</li>
+
+		<li class="side-nav-title side-nav-item">GESTION DES UTILISATEURS</li>
+		{% if is_granted('ROLE_ADMIN') %}
+			<li class="side-nav-item">
+				<a href="{{path('utilisateurs.create')}}" class="side-nav-link">
+					<i class="mdi mdi-plus"></i>
+					<span>
+						Ajouter un utilisateur
+					</span>
+				</a>
+			</li>
+			<li class="side-nav-item">
+				<a href="{{path('utilisateurs.get')}}" class="side-nav-link">
+					<i class="mdi mdi-plus"></i>
+					<span>
+						Liste des utilisateurs
+					</span>
+				</a>
+			</li>
+		{% endif %}
+		<li class="side-nav-item">
+			<a href="{{path('clients.get')}}" class="side-nav-link">
+				<i class="mdi mdi-plus"></i>
+				<span>
+					Liste des clients
+				</span>
+			</a>
+		</li>
+
+		<li class="side-nav-title side-nav-item">PARAMATRE</li>
+		{# <li class="side-nav-item">
+																																			<a href="{{path('notifications.get')}}" class="side-nav-link">
+																																				<i class="mdi mdi-plus"></i>
+																																				<span>
+																																					Notification
+																																				</span>
+																																			</a>
+																																		</li> #}
+
+		<li class="side-nav-item">
+			<a href="{{path('mon_compte')}}" class="side-nav-link">
+				<i class="mdi mdi-plus"></i>
+				<span>
+					Mon compte
+				</span>
+			</a>
+		</li>
+
+		<li class="side-nav-item">
+			<a href="{{path('contacts.get')}}" class="side-nav-link">
+				<i class="mdi mdi-plus"></i>
+				<span>
+					Message
+				</span>
+			</a>
+		</li>
+
+		<li class="side-nav-item">
+			<a href="{{path('temoignages.create')}}" class="side-nav-link">
+				<i class="mdi mdi-plus"></i>
+				<span>
+					Temoignage
+				</span>
+			</a>
+		</li>
+
+			<li class="side-nav-item">
+				<a href="{{path('evenements.create')}}" class="side-nav-link">
+					<i class="mdi mdi-plus"></i>
+					<span>
+						Evenement
+					</span>
+				</a>
+			</li>
+
+		{# 	<li class="side-nav-item">
+																																	<a data-bs-toggle="collapse" href="#sidebarCorbeille" aria-expanded="false" aria-controls="sidebarEmail" class="side-nav-link">
+																																		<i class="mdi mdi-delete"></i>
+																																		<span>
+																																			Corbeille
+																																		</span>
+																																		<span class="menu-arrow"></span>
+																																	</a>
+																																	<div class="collapse" id="sidebarCorbeille">
+																																		<ul class="side-nav-second-level">
+																																			<li>
+																																				<a href="#">Corbeille solution</a>
+																																			</li>
+																																			<li>
+																																				<a href="#">Corbeille client</a>
+																																			</li>
+																																			<li>
+																																				<a href="#">Corbeille offre</a>
+																																			</li>
+																																			<li>
+																																				<a href="#">Corbeille candidat</a>
+																																			</li>
+																																			<li>
+																																				<a href="#">Corbeille message</a>
+																																			</li>
+																																			<li>
+																																				<a href="#">Corbeille compte</a>
+																																			</li>
+																																			<li>
+																																				<a href="#">Corbeille media</a>
+																																			</li>
+																																		</ul>
+																																	</div>
+																																</li> #}
+	</ul>
+</div>

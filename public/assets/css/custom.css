@@ -1,0 +1,20 @@
+label.error{
+    color: red !important;
+    font-size: 15px;
+}
+input.error{
+    border: 1px solid red;
+}
+input.valid{
+    border: 1px solid green;
+}
+textarea.error{
+    border: 1px solid red;
+}
+textarea.valid{
+    border: 1px solid green;
+}
+
+.btn-pointer{
+    cursor: pointer;
+}

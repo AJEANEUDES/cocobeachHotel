@@ -1,0 +1,129 @@
+{% extends 'dashboard/themes/base.html.twig' %}
+
+{% block title %}UTILISATEURS |
+	{{APP_NAME}}
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<div class="page-title-right">
+						<a class="btn btn-primary btn-lg" href="{{path('utilisateurs.get')}}">Liste des utilisateurs</a>
+					</div>
+					<h4 class="page-title">Gestion des utilisateurs</h4>
+				</div>
+			</div>
+		</div>
+		<!-- end page title -->
+
+		<!-- end page title -->
+		<div class="row">
+			<div class="col-lg-2"></div>
+			<div class="col-lg-8">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="header-title" style="text-align: center;margin: 30px 0 30px 0;font-size: 30px;">Ajout d'un nouveau utilisateur</h4>
+						<form id="user" action="{{path('utilisateurs.create')}}" method="POST">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label for="nom_utilisateur" class="form-label">Nom
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<input type="text" id="nom_utilisateur" name="nom_utilisateur" class="form-control form-control-lg" placeholder="Saisir le nom">
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label for="prenom_utilisateur" class="form-label">Prenom
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<input type="text" id="prenom_utilisateur" name="prenom_utilisateur" class="form-control form-control-lg" placeholder="Saisir le prenom">
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label for="email_utilisateur" class="form-label">Email
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<input type="email" id="email_utilisateur" name="email_utilisateur" class="form-control form-control-lg" placeholder="Saisir l'email">
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label for="adresse_utilisateur" class="form-label">Adresse
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<input type="text" id="adresse_utilisateur" name="adresse_utilisateur" class="form-control form-control-lg" placeholder="Saisir l'adresse">
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label for="telephone_utilisateur" class="form-label">
+											Telephone
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<input type="number" min="0" id="telephone_utilisateur" name="telephone_utilisateur" class="form-control form-control-lg" placeholder="Saisir le numero de telephone">
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label for="level_utilisateur" class="form-label">Niveau d'accès
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<select id="level_utilisateur" name="level_utilisateur" class="form-control form-control-lg">
+											<option selected disabled>Selectionnez le role de l'utilisateur</option>
+											<option value="G03">Gerant</option>
+											<option value="A01">Administrateur</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label for="sexe_utilisateur" class="form-label">Sexe
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<select id="sexe_utilisateur" name="sexe_utilisateur" class="form-control form-control-lg">
+											<option disabled selected>Selectionnez le sexe de l'utilisateur</option>
+											<option value="M">Masculin</option>
+											<option value="F">Feminin</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label for="password" class="form-label">Mot de passe
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<input type="password" id="password" name="password" class="form-control form-control-lg" placeholder="Saisir le mot de passe">
+									</div>
+								</div>
+							</div>
+							<p>NB : Les champs avec (<span style="font-size: 18px;color: red;">*</span>) sont obligatoires</p>
+							<div class="text-end">
+								<button type="submit" class="btn btn-primary btn-lg">Enregistrer un utilisateur</button>
+							</div>
+						</form>
+					</div>
+					<!-- end card-body -->
+				</div>
+				<!-- end card -->
+			</div>
+			<!-- end col -->
+		</div>
+		<!-- end row -->
+	</div>
+{% endblock %}

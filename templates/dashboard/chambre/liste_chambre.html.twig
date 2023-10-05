@@ -1,0 +1,413 @@
+{% extends 'dashboard/themes/base.html.twig' %}
+
+{% block title %}CHAMBRES |
+	{{APP_NAME}}
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<div class="page-title-right">
+						<a class="btn btn-primary btn-lg" href="{{path('chambres.create')}}">Creer une chambre</a>
+						<a class="btn btn-primary btn-lg" href="{{path('categories.create')}}">Creer une categorie</a>
+					</div>
+					<h4 class="page-title">Gestion des chambres</h4>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="header-title" style="text-align: center;margin: 20px 0 10px 0;font-size: 25px;">Liste des chambres</h4>
+						<table id="basic-datatable" class="table dt-responsive nowrap w-100">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>IMAGE</th>
+									<th>LIBELLE</th>
+									<th>MATRICULE</th>
+									<th>DESCRIPTION</th>
+									<th>PRIX</th>
+									<th>CATEGORIE</th>
+									<th>ETAT</th>
+									<th>STATUS</th>
+									<th>DATE ET HEURE</th>
+									<th>ACTIONS</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for chambre in chambres %}
+									<tr>
+										<td>{{loop.index}}</td>
+										<td style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#update-image-chambre-{{ chambre.id }}">
+											{% if chambre.imagechambre %}
+												<img height="60" src="{{ asset("/upload_images/" ~ chambre.imagechambre) }}" title="{{ chambre.libellechambre }}" alt="{{ chambre.libellechambre }}">
+											{% endif %}
+										</td>
+										<td style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#update-libelle-chambre-{{ chambre.id }}">{{chambre.libellechambre}}</td>
+										<td style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#update-matricule-chambre-{{ chambre.id }}">{{chambre.matriculechambre}}</td>
+										<td style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#update-description-chambre-{{ chambre.id }}">{{chambre.descriptionchambre|slice(0, 15)}}</td>
+										<td style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#update-prix-chambre-{{ chambre.id }}">{{chambre.prixchambre}}</td>
+										<td>{{chambre.chambrecategorie.libelle}}</td>
+										{% if chambre.etatchambre == 0 %}
+											<td>
+												<span class="badge bg-success rounded-pill">LIBRE</span>
+											</td>
+										{% elseif chambre.etatchambre == 1 %}
+											<td>
+												<span class="badge bg-danger rounded-pill">OCCUPEE</span>
+											</td>
+										{% endif %}
+										{% if chambre.statuschambre == 0 %}
+											<td style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#update-status-chambre-{{ chambre.id }}">
+												<span class="badge bg-danger rounded-pill">INACTIF</span>
+											</td>
+										{% elseif chambre.statuschambre == 1 %}
+											<td style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#update-status-chambre-{{ chambre.id }}">
+												<span class="badge bg-success rounded-pill">ACTIF</span>
+											</td>
+										{% endif %}
+										<td>{{chambre.datecreation|date('d/m/Y')}}
+											à
+											{{chambre.datecreation|date('H:i:s')}}</td>
+										<td>
+											<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#info-chambre-{{chambre.id}}">
+												<i style="color: #fff;" class="mdi mdi-eye"></i>
+											</button>
+
+											<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-chambre-{{ chambre.id }}">
+												<i class="mdi mdi-delete"></i>
+											</button>
+										</td>
+									</tr>
+
+									<div class="modal fade" id="delete-chambre-{{ chambre.id }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-md">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="mySmallModalLabel">SUPPRESSION D'UNE CHAMBRE</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+												</div>
+												<div class="modal-body">
+													<div class="row">
+														<div class="col-md-12 mb-2">
+															Etes vous sur de vouloir supprimer cette chambre ?
+														</div>
+														<div class="col-md-8"></div>
+														<div class="col-md-4">
+															<form id="" method="POST" action="{{path('chambres.delete', {id: chambre.id})}}" style="display: inline-block;">
+																<div class="row">
+																	<div class="col-md-12 text-center mt-3">
+																		<button type="submit" class="btn btn-danger">Supprimer</button>
+																	</div>
+																</div>
+															</form>
+														</div>
+													</div>
+
+												</div>
+
+											</div>
+										</div>
+									</div>
+
+									<div class="modal fade task-modal-content" id="info-chambre-{{chambre.id}}" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-md">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="NewTaskModalLabel">INFORMATION D'UNE CHAMBRE</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<div class="card text-center">
+														<div class="card-body">
+															<div class="text-start mt-3">
+																<h4 class="text-muted mb-2">
+																	<strong>Matricule :</strong>
+																	<span class="ms-2">{{chambre.matriculechambre}}</span>
+																</h4>
+																<h4 class="text-muted mb-2">
+																	<strong>Libelle :</strong>
+																	<span class="ms-2">{{chambre.libellechambre}}</span>
+																</h4>
+																<h4 class="text-muted mb-2">
+																	<strong>Prix :</strong>
+																	<span class="ms-2">{{chambre.prixchambre}}
+																		FCFA</span>
+																</h4>
+																<h4 class="text-muted mb-2">
+																	<strong>Description :</strong>
+																	<span class="ms-2">{{chambre.descriptionchambre}}</span>
+																</h4>
+																<h4 class="text-muted mb-1">
+																	<strong>Etat :</strong>
+																	{% if chambre.etatchambre == 0 %}
+																		<span class="badge bg-success rounded-pill">LIBRE</span>
+																	{% elseif chambre.etatchambre == 1 %}
+																		<span class="badge bg-danger rounded-pill">OCCUPE</span>
+																	{% endif %}
+																</h4>
+																<h4 class="text-muted mb-1">
+																	<strong>Status :</strong>
+																	{% if chambre.statuschambre == 1 %}
+																		<span class="badge bg-success rounded-pill">ACTIF</span>
+																	{% elseif chambre.statuschambre == 0 %}
+																		<span class="badge bg-danger rounded-pill">INACTIF</span>
+																	{% endif %}
+																</h4>
+																<h4 class="text-muted mb-2">
+																	<strong>Operateur :</strong>
+																	<span class="ms-2">{{chambre.utilisateur.nomutilisateur}}
+																		{{chambre.utilisateur.prenomutilisateur}}</span>
+																</h4>
+																<h4 class="text-muted mb-1">
+																	<strong>Date de creation :</strong>
+																	<span class="ms-2">{{chambre.datecreation|date('d/m/Y')}}
+																		à
+																		{{chambre.datecreation|date('H:i:s')}}</span>
+																</h4>
+																<h4 class="text-muted mb-1">
+																	<strong>Date de modification :</strong>
+																	<span class="ms-2">{{chambre.datemodifier|date('d/m/Y')}}
+																		à
+																		{{chambre.datemodifier|date('H:i:s')}}</span>
+																</h4>
+															</div>
+														</div>
+														<!-- end card-body -->
+													</div>
+													<!-- end card -->
+												</div>
+											</div>
+											<!-- /.modal-content -->
+										</div>
+										<!-- /.modal-dialog -->
+									</div>
+
+									<div class="modal fade task-modal-content" id="update-libelle-chambre-{{chambre.id}}" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-md">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="NewTaskModalLabel">MODIFICATION D'UNE CHAMBRE</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<form id="create-chambre" action="{{path('chambres.update', {id: chambre.id})}}" method="POST">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="mb-3">
+																	<label for="libelle" class="form-label">Libelle</label>
+																	<input type="text" id="libelle" name="libelle" value="{{ chambre.libellechambre }}" class="form-control form-control-lg" required>
+																</div>
+															</div>
+														</div>
+														<div class="text-end">
+															<button type="submit" class="btn btn-primary btn-lg">Modifier</button>
+														</div>
+													</form>
+												</div>
+											</div>
+											<!-- /.modal-content -->
+										</div>
+										<!-- /.modal-dialog -->
+									</div>
+
+									<div class="modal fade task-modal-content" id="update-description-chambre-{{chambre.id}}" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-md">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="NewTaskModalLabel">MODIFICATION D'UNE CHAMBRE</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<form id="create-chambre" action="{{path('chambres.update', {id: chambre.id})}}" method="POST">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="mb-3">
+																	<label for="description" class="form-label">Description</label>
+																	<textarea type="text" id="description" name="description" rows="5" class="form-control form-control-lg">{{ chambre.descriptionchambre }}</textarea>
+																</div>
+															</div>
+														</div>
+														<div class="text-end">
+															<button type="submit" class="btn btn-primary btn-lg">Modifier</button>
+														</div>
+													</form>
+												</div>
+											</div>
+											<!-- /.modal-content -->
+										</div>
+										<!-- /.modal-dialog -->
+									</div>
+
+									<div class="modal fade task-modal-content" id="update-matricule-chambre-{{chambre.id}}" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-md">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="NewTaskModalLabel">MODIFICATION D'UNE CHAMBRE</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<form id="create-chambre" action="{{path('chambres.update', {id: chambre.id})}}" method="POST">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="mb-3">
+																	<label for="matricule" class="form-label">Matricule</label>
+																	<input type="text" id="matricule" name="matricule" value="{{ chambre.matriculechambre }}" class="form-control form-control-lg" required>
+																</div>
+															</div>
+														</div>
+														<div class="text-end">
+															<button type="submit" class="btn btn-primary btn-lg">Modifier</button>
+														</div>
+													</form>
+												</div>
+											</div>
+											<!-- /.modal-content -->
+										</div>
+										<!-- /.modal-dialog -->
+									</div>
+
+									<div class="modal fade task-modal-content" id="update-prix-chambre-{{chambre.id}}" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-md">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="NewTaskModalLabel">MODIFICATION D'UNE CHAMBRE</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<form id="create-chambre" action="{{path('chambres.update', {id: chambre.id})}}" method="POST">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="mb-3">
+																	<label for="prix_chambre" class="form-label">Prix</label>
+																	<input type="text" id="prix_chambre" name="prix_chambre" value="{{ chambre.prixchambre }}" class="form-control form-control-lg" required>
+																</div>
+															</div>
+														</div>
+														<div class="text-end">
+															<button type="submit" class="btn btn-primary btn-lg">Modifier</button>
+														</div>
+													</form>
+												</div>
+											</div>
+											<!-- /.modal-content -->
+										</div>
+										<!-- /.modal-dialog -->
+									</div>
+
+									<div class="modal fade task-modal-content" id="update-status-chambre-{{chambre.id}}" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-md">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="NewTaskModalLabel">MODIFICATION D'UNE CHAMBRE</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<form id="create-chambre" action="{{path('chambres.update', {id: chambre.id})}}" method="POST">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="mb-3">
+																	<label for="status_chambre" class="form-label">Selectionnez le status</label>
+																	<select id="status_chambre" name="status_chambre" class="form-control form-control-lg" required>
+																		{% if chambre.statuschambre == 0 %}
+																			<option value="1">ACTIF</option>
+																			<option value="0" selected>INACTIF</option>
+																		{% elseif chambre.statuschambre == 1 %}
+																			<option value="1" selected>ACTIF</option>
+																			<option value="0">INACTIF</option>
+																		{% endif %}
+																	</select>
+																</div>
+															</div>
+														</div>
+														<div class="text-end">
+															<button type="submit" class="btn btn-primary btn-lg">Modifier</button>
+														</div>
+													</form>
+												</div>
+											</div>
+											<!-- /.modal-content -->
+										</div>
+										<!-- /.modal-dialog -->
+									</div>
+
+									<div class="modal fade task-modal-content" id="update-image-chambre-{{chambre.id}}" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-md">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="NewTaskModalLabel">MODIFICATION D'UNE CHAMBRE</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<form id="create-chambre" action="{{path('chambres.update', {id: chambre.id})}}" method="POST" enctype="multipart/form-data">
+														<div class="row">
+															<div class="col-md-12 mb-3">
+																{% if chambre.imagechambre %}
+																	<img height="310" src="{{ asset("/upload_images/" ~ chambre.imagechambre) }}" title="{{ chambre.libellechambre }}" alt="{{ chambre.libellechambre }}">
+																{% endif %}
+															</div>
+															<div class="col-md-12 mb-3">
+																<div class="row">
+																	<div class="col-md-3 mb-3">
+																		{% if chambre.image1 %}
+																			<img height="65" src="{{ asset("/upload_images/" ~ chambre.image1) }}" title="{{ chambre.libellechambre }}" alt="{{ chambre.libellechambre }}">
+																		{% endif %}
+																		<label for="image_chambre1" class="form-label mt-3">Image 1</label>
+																		<input type="file" id="image_chambre1" name="image_chambre1" value="" class="form-control form-control-lg">
+																	</div>
+																	<div class="col-md-3 mb-3">
+																		{% if chambre.image2 %}
+																			<img height="65" src="{{ asset("/upload_images/" ~ chambre.image2) }}" title="{{ chambre.libellechambre }}" alt="{{ chambre.libellechambre }}">
+																		{% endif %}
+																		<label for="image_chambre2" class="form-label mt-3">Image 2</label>
+																		<input type="file" id="image_chambre2" name="image_chambre2" value="" class="form-control form-control-lg">
+																	</div>
+																	<div class="col-md-3 mb-3">
+																		{% if chambre.image3 %}
+																			<img height="65" src="{{ asset("/upload_images/" ~ chambre.image3) }}" title="{{ chambre.libellechambre }}" alt="{{ chambre.libellechambre }}">
+																		{% endif %}
+																		<label for="image_chambre3" class="form-label mt-3">Image 3</label>
+																		<input type="file" id="image_chambre3" name="image_chambre3" value="" class="form-control form-control-lg">
+																	</div>
+																	<div class="col-md-3 mb-3">
+																		{% if chambre.image4 %}
+																			<img height="65" src="{{ asset("/upload_images/" ~ chambre.image4) }}" title="{{ chambre.libellechambre }}" alt="{{ chambre.libellechambre }}">
+																		{% endif %}
+																		<label for="image_chambre4" class="form-label mt-3">Image 4</label>
+																		<input type="file" id="image_chambre4" name="image_chambre4" value="" class="form-control form-control-lg">
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-12">
+																<div class="mb-3">
+																	<label for="image_chambre" class="form-label">Image de la chambre</label>
+																	<input type="file" id="image_chambre" name="image_chambre" value="" class="form-control form-control-lg">
+																</div>
+															</div>
+														</div>
+														<div class="text-end">
+															<button type="submit" class="btn btn-primary btn-lg">Modifier l'image</button>
+														</div>
+													</form>
+												</div>
+											</div>
+											<!-- /.modal-content -->
+										</div>
+										<!-- /.modal-dialog -->
+									</div>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<!-- end page title -->
+{% endblock %}

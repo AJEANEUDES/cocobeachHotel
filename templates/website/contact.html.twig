@@ -1,0 +1,116 @@
+{% extends 'website/themes/base.html.twig' %}
+{% block title %}CONTACTEZ-NOUS |
+	{{APP_NAME}}
+{% endblock %}
+{% block body %}
+	<!-- Breadcrumb Area Start -->
+	<div class="breadcrumb-area contact-breadcrumb bg-img bg-overlay jarallax" style="background-image: url({{asset('web/img/img-coco-beach-hotel15.JPG')}});">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="breadcrumb-content text-center mt-100">
+						<h2 class="page-title">Contactez-nous</h2>
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb justify-content-center">
+								<li class="breadcrumb-item">
+									<a href="{{path('index')}}">Accueil</a>
+								</li>
+								<li class="breadcrumb-item active" aria-current="page">Contactez-nous</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Breadcrumb Area End -->
+	<!-- Google Maps & Contact Info Area Start -->
+	<section class="google-maps-contact-info">
+		<div class="container-fluid">
+			<div class="google-maps-contact-content">
+				<div
+					class="row">
+					<!-- Single Contact Info -->
+					<div class="col-6 col-lg-3">
+						<div class="single-contact-info">
+							<i class="fa fa-phone" aria-hidden="true"></i>
+							<h4>Telephone</h4>
+							<p>{{COMPANY_PHONE}}</p>
+						</div>
+					</div>
+					<!-- Single Contact Info -->
+					<div class="col-6 col-lg-3">
+						<div class="single-contact-info">
+							<i class="fa fa-map-marker" aria-hidden="true"></i>
+							<h4>Adresse</h4>
+							<p>{{COMPANY_LOCATION}}</p>
+						</div>
+					</div>
+					<!-- Single Contact Info -->
+					<div class="col-6 col-lg-3">
+						<div class="single-contact-info">
+							<i class="fa fa-clock-o" aria-hidden="true"></i>
+							<h4>Disponibilité</h4>
+							<p>24h/24 et 7j/7.</p>
+						</div>
+					</div>
+					<!-- Single Contact Info -->
+					<div class="col-6 col-lg-3">
+						<div class="single-contact-info">
+							<i class="fa fa-envelope-o" aria-hidden="true"></i>
+							<h4>Email</h4>
+							<p>{{COMPANY_EMAIL}}</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Google Maps -->
+				<div class="google-maps">
+					<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15867.385906101988!2d1.3005026!3d6.1513097!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x43b5a29b07e22dbf!2sHotel%20Coco%20Beach!5e0!3m2!1sfr!2stg!4v1640703176685!5m2!1sfr!2stg" allowfullscreen="" loading="lazy"></iframe>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Google Maps & Contact Info Area End -->
+	<!-- Contact Form Area Start -->
+	<div class="roberto-contact-form-area section-padding-100">
+		<div class="container">
+			<div class="row">
+				<div
+					class="col-12">
+					<!-- Section Heading -->
+					<div class="section-heading text-center wow fadeInUp" data-wow-delay="100ms">
+						<h6>Nous contacter</h6>
+						<h2>Laissez un message</h2>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div
+					class="col-12">
+					<!-- Form -->
+					<div class="roberto-contact-form">
+						<form id="contact" action="{{path('contacts.create')}}" method="post">
+							<div class="row">
+								<div class="col-12 col-lg-6 wow fadeInUp" data-wow-delay="100ms">
+									<input type="text" name="nom_complet" id="nom_complet" class="form-control mb-30" placeholder="Votre Nom et Prenom">
+								</div>
+								<div class="col-12 col-lg-6 wow fadeInUp" data-wow-delay="100ms">
+									<input type="email" name="email_contact" id="email_contact" class="form-control mb-30" placeholder="Votre Email">
+								</div>
+								<div class="col-12 wow fadeInUp" data-wow-delay="100ms">
+									<textarea name="message_contact" id="message_contact" class="form-control mb-30" placeholder="Votre Message"></textarea>
+								</div>
+								<div class="col-12 text-center wow fadeInUp" data-wow-delay="100ms">
+									<button type="submit" class="btn roberto-btn mt-15">Envoyer le message</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Contact Form Area End -->
+{% endblock %}

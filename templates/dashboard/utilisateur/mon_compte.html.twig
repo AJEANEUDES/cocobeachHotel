@@ -1,0 +1,205 @@
+{% extends 'dashboard/themes/base.html.twig' %}
+
+{% block title %}MON COMPTE |
+	{{APP_NAME}}
+{% endblock %}
+
+{% block body %}
+	<div
+		class="container-fluid">
+		<!-- start page title -->
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<div class="page-title-right"></div>
+					<h4 class="page-title">Mon compte</h4>
+				</div>
+			</div>
+		</div>
+		<!-- end page title -->
+
+		<!-- Start Content-->
+		<div class="row">
+			<div class="col-xl-4 col-lg-5">
+				<div class="card text-center">
+					<div class="card-body">
+						<img src="{{asset('assets/images/user.jpg')}}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
+
+						<h4 class="mb-0 mt-2">{{app.user.nomutilisateur}}
+							{{app.user.prenomutilisateur}}</h4>
+						<p class="text-muted font-14"></p>
+
+						<a href="{{ path('logout') }}" class="btn btn-danger btn-sm mb-2">Se deconnecter</a>
+
+						<div class="text-start mt-3">
+							<p class="text-muted mb-2 font-13">
+								<strong>Telephone :</strong>
+								<span class="ms-2">{{ app.user.telephoneutilisateur }}</span>
+							</p>
+
+							<p class="text-muted mb-2 font-13">
+								<strong>Email :</strong>
+								<span class="ms-2 ">{{app.user.emailutilisateur}}</span>
+							</p>
+
+							<p class="text-muted mb-1 font-13">
+								<strong>Adresse :</strong>
+								<span class="ms-2">{{app.user.adresseutilisateur}}</span>
+							</p>
+						</div>
+					</div>
+					<!-- end card-body -->
+				</div>
+				<!-- end card -->
+
+			</div>
+			<!-- end col-->
+
+			<div class="col-xl-8 col-lg-7">
+				<div class="card">
+					<div class="card-body">
+						<ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
+
+							<li class="nav-item">
+								<a href="#settings" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0 active">
+									Information personnelle
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="#timeline" data-bs-toggle="tab" aria-expanded="true" class="nav-link rounded-0">
+									Information de connexion
+								</a>
+							</li>
+						</ul>
+						<div class="tab-content">
+							<div class="tab-pane show active" id="settings">
+								<form method="POST" action="{{path('utilisateurs.compte.update')}}" id="user-edit-info">
+									<h5 class="mb-4 text-uppercase">
+										<i class="mdi mdi-account-circle me-1"></i>
+										Modification des informations</h5>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="mb-3">
+												<label for="nom_utilisateur" class="form-label">Nom</label>
+												<input type="text" value="{{app.user.nomutilisateur}}" class="form-control" id="nom_utilisateur" name="nom_utilisateur">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="mb-3">
+												<label for="prenom_utilisateur" class="form-label">Prenom</label>
+												<input type="text" value="{{app.user.prenomutilisateur}}" class="form-control" id="prenom_utilisateur" name="prenom_utilisateur">
+											</div>
+										</div>
+										<!-- end col -->
+									</div>
+
+									<div class="row">
+										<div class="col-md-6">
+											<div class="mb-3">
+												<label for="email_utilisateur" class="form-label">Email</label>
+												<input type="text" value="{{app.user.emailutilisateur}}" class="form-control" id="email_utilisateur" name="email_utilisateur">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="mb-3">
+												<label for="adresse_utilisateur" class="form-label">Adresse</label>
+												<input type="text" value="{{app.user.adresseutilisateur}}" class="form-control" id="adresse_utilisateur" name="adresse_utilisateur">
+											</div>
+										</div>
+										<!-- end col -->
+									</div>
+									<!-- end row -->
+
+									<div class="row">
+										<div class="col-md-6">
+											<div class="mb-3">
+												<label for="telephone_utilisateur" class="form-label">Telephone</label>
+												<input type="text" value="{{app.user.telephoneutilisateur}}" class="form-control" id="telephone_utilisateur" name="telephone_utilisateur">
+											</div>
+										</div>
+
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="mb-3">
+												<button type="submit" class="btn btn-success">
+													Modifier</button>
+											</div>
+										</div>
+									</div>
+
+								</form>
+							</div>
+
+							<div class="tab-pane" id="timeline">
+								<form mathod="POST" action="{{ path('utilisateurs.update.password') }}">
+									<h5 class="mb-4 text-uppercase">
+										<i class="mdi mdi-account-circle me-1"></i>
+										Modification des informations de connexion</h5>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="mb-3">
+												<label for="password1" class="form-label">Ancien mot de passe</label>
+												<input type="password" name="password1" class="form-control" id="password1" placeholder="Saisir l'ancien mot de passe">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="mb-3">
+												<label for="password2" class="form-label">Nouveau mot de passe</label>
+												<input type="password" name="password2" class="form-control" id="password2" placeholder="Saisir le nouveau mot de passe">
+											</div>
+										</div>
+										<!-- end col -->
+									</div>
+
+									<div class="row">
+										<div class="col-md-6">
+											<div class="mb-3">
+												<label for="password3" class="form-label">Confirmer le mot de passe</label>
+												<input type="password" name="password3" class="form-control" id="password3" placeholder="Confirmer le nouveau mot de passe">
+											</div>
+										</div>
+									</div>
+									<!-- end row -->
+
+									<div class="row">
+										<div class="col-md-6">
+											<div class="mb-3">
+												<button type="submit" class="btn btn-success">
+													Modifier</button>
+											</div>
+										</div>
+									</div>
+
+								</form>
+							</div>
+							<!-- end timeline content-->
+							<!-- end settings content-->
+
+						</div>
+						<!-- end tab-content -->
+					</div>
+					<!-- end card body -->
+				</div>
+				<!-- end card -->
+			</div>
+			<!-- end col -->
+		</div>
+		<!-- end row-->
+
+
+	</div>
+	<!-- content -->
+	{% for message in app.flashes('success') %}
+		<script>
+			toastr.success("{{ message }}", {timeOut: 5000});
+		</script>
+	{% endfor %}
+
+	{% for message in app.flashes('error') %}
+		<script>
+			toastr.error("{{ message }}", {timeOut: 5000});
+		</script>
+	{% endfor %}
+
+</div>{% endblock %}

@@ -1,0 +1,174 @@
+{% extends 'dashboard/themes/base.html.twig' %}
+
+{% block title %}MESSAGES |
+	{{APP_NAME}}
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<div
+						class="page-title-right">{# <a class="btn btn-primary btn-lg" href="#"></a> #}
+					</div>
+					<h4 class="page-title">Gestion des messages</h4>
+				</div>
+			</div>
+		</div>
+		<!-- end page title -->
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="header-title" style="text-align: center;margin: 20px 0 10px 0;font-size: 25px;">Liste des messages</h4>
+						<table id="basic-datatable" class="table dt-responsive nowrap w-100">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>EMETTEUR</th>
+									<th>EMAIL DE L'EMETTEUR</th>
+									<th>MESSAGE</th>
+									<th>DATE ET HEURE</th>
+									<th>ACTIONS</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for contact in contacts %}
+									<tr>
+										<td>{{loop.index}}</td>
+										<td>{{contact.nomcontact}}</td>
+										<td>{{contact.emailcontact}}</td>
+										<td>{{contact.messagecontact|slice(0, 30)}}</td>
+										<td>{{contact.datecreation|date('d/m/Y')}}
+											à
+											{{contact.datecreation|date('H:i:s')}}</td>
+										<td>
+											<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#send-contact-{{ contact.id }}">
+												<i class="mdi mdi-comment"></i>
+											</button>
+
+											<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#info-contact-{{ contact.id }}">
+												<i class="mdi mdi-eye"></i>
+											</button>
+
+											<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-contact-{{ contact.id }}">
+												<i class="mdi mdi-delete"></i>
+											</button>
+										</td>
+									</tr>
+
+									<div class="modal fade" id="delete-contact-{{ contact.id }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-md">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="mySmallModalLabel">SUPPRESSION D'UN MESSAGE</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+												</div>
+												<div class="modal-body">
+													<div class="row">
+														<div class="col-md-12 mb-2">
+															Etes vous sur de vouloir supprimer ce message ?
+														</div>
+														<div class="col-md-8"></div>
+														<div class="col-md-4">
+															<form id="" method="POST" action="{{path('contacts.delete', {id: contact.id})}}" style="display: inline-block;">
+																<div class="row">
+																	<div class="col-md-12 text-center mt-3">
+																		<button type="submit" class="btn btn-danger">Supprimer</button>
+																	</div>
+																</div>
+															</form>
+														</div>
+													</div>
+
+												</div>
+
+											</div>
+										</div>
+									</div>
+
+									<div class="modal fade task-modal-content" id="info-contact-{{contact.id}}" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-md">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="NewTaskModalLabel">INFORMATION D'UN MESSAGE</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<div class="card text-center">
+														<div class="card-body">
+															<div class="text-start mt-3">
+																<h4 class="text-muted mb-2">
+																	<strong>Emetteur :</strong>
+																	<span class="ms-2">{{contact.nomcontact}}</span>
+																</h4>
+																<h4 class="text-muted mb-1">
+																	<strong>Email de l'emetteur :</strong>
+																	<span class="ms-2">{{contact.emailcontact}}</span>
+																</h4>
+																<h4 class="text-muted mb-1">
+																	<strong>Message :</strong>
+																	<span class="ms-2">{{contact.messagecontact}}</span>
+																</h4>
+																<h4 class="text-muted mb-1">
+																	<strong>Date d'envoie :</strong>
+																	<span class="ms-2">{{contact.datecreation|date('d/m/Y')}}
+																		à
+																		{{contact.datecreation|date('H:i:s')}}</span>
+																</h4>
+															</div>
+														</div>
+														<!-- end card-body -->
+													</div>
+													<!-- end card -->
+												</div>
+											</div>
+											<!-- /.modal-content -->
+										</div>
+										<!-- /.modal-dialog -->
+									</div>
+
+									<div class="modal fade task-modal-content" id="send-contact-{{contact.id}}" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-md">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="NewTaskModalLabel">RENPONDRE AU MESSAGE</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<form id="create-category" action="{{path('contacts.send', {id: contact.id})}}" method="POST">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="mb-3">
+																	<label for="recepteur" class="form-label">Recepteur du message</label>
+																	<input type="text" id="recepteur" name="recepteur" value="{{ contact.emailcontact }}" class="form-control form-control-lg">
+																</div>
+															</div>
+															<div class="col-md-12">
+																<div class="mb-3">
+																	<label for="message" class="form-label">Message</label>
+																	<textarea type="text" rows="5" id="message" name="message" value="" class="form-control form-control-lg" placeholder="Saisir le message"></textarea>
+																</div>
+															</div>
+														</div>
+														<div class="text-end">
+															<button type="submit" class="btn btn-primary btn-lg">Envoyer le message</button>
+														</div>
+													</form>
+												</div>
+											</div>
+											<!-- /.modal-content -->
+										</div>
+										<!-- /.modal-dialog -->
+									</div>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

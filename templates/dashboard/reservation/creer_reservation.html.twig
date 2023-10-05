@@ -1,0 +1,116 @@
+{% extends 'dashboard/themes/base.html.twig' %}
+
+{% block title %}RESERVATIONS |
+	{{APP_NAME}}
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<div class="page-title-right">
+						<a class="btn btn-primary btn-lg" href="{{path('reservations.get')}}">Liste des reservations</a>
+					</div>
+					<h4 class="page-title">Gestion des reservations</h4>
+				</div>
+			</div>
+		</div>
+
+		<!-- end page title -->
+		<div class="row">
+			{% include "dashboard/client/creer_client.html.twig" %}
+			<div class="col-lg-8">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="header-title" style="text-align: center;margin: 30px 0 30px 0;font-size: 30px;">Ajout d'une nouvelle reservation</h4>
+						<form id="create-reservation" action="" method="POST">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label for="chambre" class="form-label">Selectionnez la chambre<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<select id="chambre" name="chambre" class="form-control form-control-lg select2" data-toggle="select2">
+											<option disabled selected>-- Chambre libre --</option>
+											{% for chambre in chambres %}
+												<option value="{{chambre.id}}">{{chambre.libellechambre}}-{{chambre.matriculechambre}}</option>
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label for="client" class="form-label">Selectionnez le client<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<select id="client" name="client" class="form-control form-control-lg select2" data-toggle="select2">
+											<option disabled selected>-- Client --</option>
+											{% for client in clients %}
+												<option value="{{client.id}}">{{client.nomclient}}
+													{{client.prenomclient}}</option>
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label for="date_debut" class="form-label">Date d'arrivée
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<input type="date" id="date_debut" name="date_debut" class="form-control form-control-lg" data-date-container="#datepicker2">
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="mb-3 position-relative" id="datepicker2">
+										<label for="date_fin" class="form-label">Date de depart
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<input type="date" id="date_fin" name="date_fin" class="form-control form-control-lg" data-date-container="#datepicker2">
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label for="nbre_chambre" class="form-label">Nombre de chambre</label>
+										<input type="number" min="0" id="nbre_chambre" name="nbre_chambre" value="0" class="form-control form-control-lg">
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="mb-3 position-relative" id="datepicker2">
+										<label for="nbre_adulte" class="form-label">Nombre d'adulte</label>
+										<input type="number" min="0" id="nbre_adulte" name="nbre_adulte" value="0" class="form-control form-control-lg">
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label for="nbre_enfant" class="form-label">Nombre d'enfant</label>
+										<input type="number" min="0" id="nbre_enfant" name="nbre_enfant" value="0" class="form-control form-control-lg">
+									</div>
+								</div>
+							</div>
+
+							<div class="mt-4">
+								<button type="submit" class="btn btn-primary btn-lg">Enregistrer une reservation</button>
+							</div>
+
+						</form>
+					</div>
+					<!-- end card-body -->
+				</div>
+				<!-- end card -->
+			</div>
+			<!-- end col -->
+		</div>
+		<!-- end row -->
+	</div>
+{% endblock %}

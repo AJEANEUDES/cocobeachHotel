@@ -1,0 +1,86 @@
+{% extends 'dashboard/themes/base.html.twig' %}
+
+{% block title %}SERVICES |
+	{{APP_NAME}}
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<div class="page-title-right">
+						<a class="btn btn-primary btn-lg" href="{{path('services.get')}}">Liste des services</a>
+					</div>
+					<h4 class="page-title">Gestion des services</h4>
+				</div>
+			</div>
+		</div>
+
+		<!-- end page title -->
+		<div class="row">
+
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="header-title" style="text-align: center;margin: 30px 0 30px 0;font-size: 30px;">Ajout d'un nouveau service</h4>
+						<form id="create-reservation" action="" method="POST">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="mb-3">
+										<label for="reservation" class="form-label">Selectionnez le client<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<select id="reservation" name="reservation" class="form-control form-control-lg select2" data-toggle="select2">
+											<option disabled selected>-- Reservation --</option>
+											{% for reservation in reservations %}
+												<option value="{{reservation.codereservation}}">{{reservation.client.nomclient}}
+													{{reservation.client.prenomclient}}
+													-
+													{{reservation.codereservation}}
+													-
+													{{reservation.chambre.libellechambre}}</option>
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="mb-3">
+										<label for="libelle_service" class="form-label">Libelle du service
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<input type="text" id="libelle_service" name="libelle_service" class="form-control form-control-lg" data-date-container="#datepicker2">
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="mb-3">
+										<label for="prix_service" class="form-label">Prix du service
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<input type="numbre" min="0" id="prix_service" name="prix_service" class="form-control form-control-lg" data-date-container="#datepicker2">
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="mb-3">
+										<label for="date_service" class="form-label">Date du service
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<input type="date" id="date_service" name="date_service" class="form-control form-control-lg" data-date-container="#datepicker2">
+									</div>
+								</div>
+							</div>
+
+							<div class="mt-4">
+								<button type="submit" class="btn btn-primary btn-lg">Enregistrer un service</button>
+							</div>
+
+						</form>
+					</div>
+					<!-- end card-body -->
+				</div>
+				<!-- end card -->
+			</div>
+			<!-- end col -->
+		</div>
+		<!-- end row -->
+	</div>
+{% endblock %}

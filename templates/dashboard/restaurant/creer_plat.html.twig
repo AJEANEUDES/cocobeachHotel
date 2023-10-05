@@ -1,0 +1,249 @@
+{% extends 'dashboard/themes/base.html.twig' %}
+
+{% block title %}RESTAURANT |
+	{{APP_NAME}}
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<div
+						class="page-title-right">{# <a class="btn btn-primary btn-lg" href="{{path('chambres.create')}}">Creer une chambre</a> #}
+					</div>
+					<h4 class="page-title">Restaurant</h4>
+				</div>
+			</div>
+		</div>
+		<!-- end page title -->
+
+		<!-- end page title -->
+		<div class="row">
+			<div class="col-lg-4">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="header-title" style="text-align: center;margin: 30px 0 30px 0;font-size: 30px;">Ajout d'une nouvelle categorie de menu</h4>
+						<form id="create-category" action="{{path('menu.create')}}" method="POST">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label for="menu" class="form-label">Menu
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<input type="text" id="menu" name="menu" class="form-control form-control-lg" placeholder="Saisir le menu du restaurant" required>
+									</div>
+								</div>
+								<div class="">
+									<div class="mt-4">
+										<button type="submit" class="btn btn-primary btn-lg">Enregistrer une categorie</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<!-- end card-body -->
+				</div>
+			</div>
+			<div class="col-lg-8">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="header-title" style="text-align: center;margin: 30px 0 30px 0;font-size: 30px;">Ajout d'un nouveau menu</h4>
+						<form id="create-category" action="{{path('restaurants.get')}}" method="POST">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label for="client" class="form-label">Selectionnez la categorie<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<select id="type_menu" name="type_menu" class="form-control form-control-lg select2" data-toggle="select2">
+											<option disabled selected>-- Type Menu --</option>
+											{% for menu in menus %}
+												<option value="{{menu.id}}">{{menu.nommenu}}</option>
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label for="nom_menu" class="form-label">Nom du menu
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<input type="text" id="nom_menu" name="nom_menu" class="form-control form-control-lg" placeholder="Saisir le nom du menu" required>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label for="prix_menu" class="form-label">Prix du menu
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<input type="text" id="prix_menu" name="prix_menu" class="form-control form-control-lg" placeholder="Saisir le prix du menu" required>
+									</div>
+								</div>
+							</div>
+							<div class="">
+								<div class="mt-4">
+									<button type="submit" class="btn btn-primary btn-lg">Enregistrer un menu</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<!-- end card-body -->
+				</div>
+				<!-- end card -->
+			</div>
+			<!-- end col -->
+		</div>
+		<!-- end row -->
+	</div>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="header-title" style="text-align: center;margin: 20px 0 10px 0;font-size: 25px;">Liste des menus du restaurant</h4>
+						<table id="basic-datatable" class="table dt-responsive nowrap w-100">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>MENU</th>
+									<th>PRIX</th>
+									<th>TYPE</th>
+									<th>STATUS</th>
+									{# <th>OPERATEUR</th> #}
+									<th>DATE ET HEURE</th>
+									<th>ACTIONS</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for restaurant in restaurants %}
+									<tr>
+										<td>{{loop.index}}</td>
+										<td style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#update-nom-restaurant-{{ restaurant.id }}">{{restaurant.nomplat}}</td>
+										<td style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#update-prix-restaurant-{{ restaurant.id }}">{{restaurant.prixplat}}</td>
+										<td>{{restaurant.menus.nommenu}}</td>
+										{% if restaurant.statusplat == 0 %}
+											<td style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#update-status-restaurant-{{ restaurant.id }}">
+												<span class="badge bg-danger rounded-pill">INACTIF</span>
+											</td>
+										{% else %}
+											<td style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#update-status-restaurant-{{ restaurant.id }}">
+												<span class="badge bg-success rounded-pill">ACTIF</span>
+											</td>
+										{% endif %}
+										<td>{{restaurant.datecreation|date('d/m/Y')}}
+											à
+											{{restaurant.datecreation|date('H:i:s')}}</td>
+										<td>
+											<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#info-restaurant-{{restaurant.id}}">
+												<i style="color: #fff;" class="mdi mdi-eye"></i>
+											</button>
+
+											<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-restaurant-{{ restaurant.id }}">
+												<i class="mdi mdi-delete"></i>
+											</button>
+										</td>
+									</tr>
+
+									<div class="modal fade task-modal-content" id="update-nom-restaurant-{{restaurant.id}}" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-md">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="NewTaskModalLabel">MODIFICATION D'UN MENU</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<form id="create-restaurant" action="{{path('restaurants.update', {id: restaurant.id})}}" method="POST">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="mb-3">
+																	<label for="nom_plat" class="form-label">Nom du menu</label>
+																	<input type="text" id="nom_plat" name="nom_plat" value="{{ restaurant.nomplat }}" class="form-control form-control-lg" placeholder="Saisir le nom">
+																</div>
+															</div>
+														</div>
+														<div class="text-end">
+															<button type="submit" class="btn btn-primary btn-lg">Modifier</button>
+														</div>
+													</form>
+												</div>
+											</div>
+											<!-- /.modal-content -->
+										</div>
+										<!-- /.modal-dialog -->
+									</div>
+
+									<div class="modal fade task-modal-content" id="update-prix-restaurant-{{restaurant.id}}" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-md">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="NewTaskModalLabel">MODIFICATION D'UN MENU</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<form id="create-restaurant" action="{{path('restaurants.update', {id: restaurant.id})}}" method="POST">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="mb-3">
+																	<label for="prix_plat" class="form-label">Prix du menu</label>
+																	<input type="text" id="prix_plat" name="prix_plat" value="{{ restaurant.prixplat }}" class="form-control form-control-lg" placeholder="Saisir le prix">
+																</div>
+															</div>
+														</div>
+														<div class="text-end">
+															<button type="submit" class="btn btn-primary btn-lg">Modifier</button>
+														</div>
+													</form>
+												</div>
+											</div>
+											<!-- /.modal-content -->
+										</div>
+										<!-- /.modal-dialog -->
+									</div>
+
+									<div class="modal fade task-modal-content" id="update-status-restaurant-{{restaurant.id}}" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-md">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="NewTaskModalLabel">MODIFICATION D'UN MENU</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<form id="create-restaurant" action="{{path('restaurants.update', {id: restaurant.id})}}" method="POST">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="mb-3">
+																	<label for="status_plat" class="form-label">Selectionnez le status</label>
+																	<select id="status_plat" name="status_plat" class="form-control form-control-lg">
+																		{% if restaurant.statusplat == 0 %}
+																			<option value="0" selected>Inactif</option>
+																			<option value="1">Actif</option>
+																		{% elseif restaurant.statusplat == 1 %}
+																			<option value="0">Inactif</option>
+																			<option value="1" selected>Actif</option>
+																		{% endif %}
+																	</select>
+																</div>
+															</div>
+														</div>
+														<div class="text-end">
+															<button type="submit" class="btn btn-primary btn-lg">Modifier</button>
+														</div>
+													</form>
+												</div>
+											</div>
+											<!-- /.modal-content -->
+										</div>
+										<!-- /.modal-dialog -->
+									</div>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

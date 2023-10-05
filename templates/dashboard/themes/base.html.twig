@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>
+			{% block title %}{% endblock %}
+		</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="{{APP_DESCRIPTION}}">
+		<meta name="author" content="{{APP_AUTHOR}}">
+		<link rel="icon" href="{{asset('web/images/logos/logoyat.jpg')}}" type="image/gif"/>
+		<link href="{{asset('assets/css/vendor/jquery-jvectormap-1.2.2.css')}}" rel="stylesheet" type="text/css">
+		<link href="{{asset('assets/css/icons.min.css')}}" rel="stylesheet" type="text/css">
+		<link href="{{asset('assets/css/app.min.css')}}" rel="stylesheet" type="text/css" id="light-style">
+		<link href="{{asset('assets/css/app-dark.min.css')}}" rel="stylesheet" type="text/css" id="dark-style">
+		<link href="{{asset('assets/css/custom.css')}}" rel="stylesheet" type="text/css">
+		<link href="{{asset('assets/css/toastr.min.css')}}" rel="stylesheet" type="text/css">
+		<script src="{{asset('assets/js/jquery-3.1.1.js')}}"></script>
+		<script src="{{asset('assets/js/toastr.min.js')}}"></script>
+
+		<!-- Datatables css -->
+		<link href="{{asset('assets/css/vendor/dataTables.bootstrap5.css')}}" rel="stylesheet" type="text/css"/>
+		<link href="{{asset('assets/css/vendor/responsive.bootstrap5.css')}}" rel="stylesheet" type="text/css"/>
+
+	</head>
+	<body
+		class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+		<!-- Begin page -->
+		<div class="wrapper">
+			{% include "dashboard/themes/sidebars.html.twig" %}
+
+			<div class="content-page">
+				<div class="content">
+					{% include "dashboard/themes/navbar.html.twig" %}
+				</div>
+				<!-- content -->
+				{% block body %}{% endblock %}
+			</div>
+			{% include "dashboard/themes/footer.html.twig" %}
+
+		</div>
+		<script src="{{asset('assets/js/vendor.min.js')}}"></script>
+		<script src="{{asset('assets/js/app.min.js')}}"></script>
+
+		<!--<script src="{{asset('assets/js/pages/demo.dashboard.js')}}"></script>-->
+		<script src="{{asset('assets/js/jquery.validate.js')}}"></script>
+		<script src="{{asset('assets/js/validation/poste-validation.js')}}"></script>
+		<script src="{{asset('assets/js/validation/client-validation.js')}}"></script>
+		<script src="{{asset('assets/js/validation/emploie-validation.js')}}"></script>
+		<script src="{{asset('assets/js/validation/user-validation.js')}}"></script>
+		<script src="{{asset('assets/js/validation/reservation-validation.js')}}"></script>
+		<script src="{{asset('assets/js/validation/map-validation.js')}}"></script>
+		<!-- Datatables js -->
+		<!-- Datatables js -->
+		<script src="{{asset('assets/js/vendor/jquery.dataTables.min.js')}}"></script>
+		<script src="{{asset('assets/js/vendor/dataTables.bootstrap5.js')}}"></script>
+		<script src="{{asset('assets/js/vendor/dataTables.responsive.min.js')}}"></script>
+		<script src="{{asset('assets/js/vendor/responsive.bootstrap5.min.js')}}"></script>
+		<!-- Datatable Init js -->
+		<script src="{{asset('assets/js/pages/demo.datatable-init.js')}}"></script>
+		<script src="{{asset('assets/js/jquery.datetimepicker.full.min.js')}}"></script>
+
+		<script>
+			$('#picker').datetimepicker({timepicker: false, datepicker: true, format: 'd-m-Y', value: '01-12-2021'})
+		</script>
+
+		{% for message in app.flashes('success') %}
+			<script>
+				toastr.success("{{ message }}", {timeOut: 5000});
+			</script>
+		{% endfor %}
+		<script></script>
+	</body>
+</html>

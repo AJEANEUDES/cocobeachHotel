@@ -1,0 +1,100 @@
+{% extends 'dashboard/themes/base.html.twig' %}
+
+{% block title %}SERVICES |
+	{{APP_NAME}}
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<div class="page-title-right">
+						<a class="btn btn-primary btn-lg" href="{{path('services.create')}}">Creer un service</a>
+					</div>
+					<h4 class="page-title">Gestion des services</h4>
+				</div>
+			</div>
+		</div>
+		<!-- end page title -->
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="header-title" style="text-align: center;margin: 20px 0 10px 0;font-size: 25px;">Liste des services</h4>
+						<table id="basic-datatable" class="table dt-responsive nowrap w-100">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>LIBELLE</th>
+									<th>CLIENT</th>
+									<th>OPERATEUR</th>
+									<th>DATE ET HEURE</th>
+									<th>ACTIONS</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for service in services %}
+									<tr>
+										<td>{{loop.index}}</td>
+										<td>{{service.libelleservice}}</td>
+										<td>{{service.reservation.client.nomclient}}
+											{{service.reservation.client.prenomclient}}
+											-
+											{{service.reservation.chambre.libellechambre}}
+											- [{{service.reservation.chambre.matriculechambre}}]</td>
+										<td>{{service.reservation.datecreation|date('d/m/Y')}}
+											à
+											{{service.reservation.datecreation|date('H:i:s')}}</td>
+										<td>{{service.reservation.utilisateur.nomutilisateur}}
+											{{service.reservation.utilisateur.prenomutilisateur}}</td>
+										<td>
+											<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#info-service-{{service.id}}">
+												<i style="color: #fff;" class="mdi mdi-eye"></i>
+											</button>
+
+											<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-service-{{ service.id }}">
+												<i class="mdi mdi-delete"></i>
+											</button>
+										</td>
+									</tr>
+
+									<div class="modal fade" id="delete-service-{{ service.id }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-md">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="mySmallModalLabel">SUPPRESSION D'UN SERVICE</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+												</div>
+												<div class="modal-body">
+													<div class="row">
+														<div class="col-md-12 mb-2">
+															Etes vous sur de vouloir supprimer ce service ?
+														</div>
+														<div class="col-md-8"></div>
+														<div class="col-md-4">
+															<form id="" method="POST" action="{{path('services.delete', {id: service.id})}}" style="display: inline-block;">
+																<div class="row">
+																	<div class="col-md-12 text-center mt-3">
+																		<button type="submit" class="btn btn-danger">Supprimer</button>
+																	</div>
+																</div>
+															</form>
+														</div>
+													</div>
+
+												</div>
+
+											</div>
+										</div>
+									</div>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

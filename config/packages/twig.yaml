@@ -1,0 +1,32 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    exception_controller: null
+
+    globals:
+        #locales: '%app.locales%'
+        countChbres: '@App\Twig\StatistiqueExtension'
+        countChbresLib: '@App\Twig\StatistiqueExtension'
+        countChbresOccup: '@App\Twig\StatistiqueExtension'
+        countClts: '@App\Twig\StatistiqueExtension'
+        countReserv: '@App\Twig\StatistiqueExtension'
+        countEvent: '@App\Twig\StatistiqueExtension'
+        allNotification: '@App\Twig\StatistiqueExtension'
+        getAllNotifs: '@App\Twig\StatistiqueExtension'
+        allMessage: '@App\Twig\StatistiqueExtension'
+        getAllMessages: '@App\Twig\StatistiqueExtension'
+        APP_NAME: "COCO BEACH"
+        APP_LOGO: "web/img/favicon.jpeg"
+        APP_AUTHOR: "ZOETECHGROUP"
+        URL_AUTHOR: "http://www.zoetechgroup.africa"
+        APP_DESCRIPTION: "EasyHotel est un logiciel de gestion d'hotel"
+        APP_KEYWORD: "EasyHotel, Coco Beach, Logiciel, Gestion, Hotel"
+        COMPANY_PHONE: "+228 70 28 69 11"
+        COMPANY_EMAIL: "contact@cocobeach-hotel.com"
+        COMPANY_LOCATION: "Zone portuaire 12502, Lomé, Togo"
+        URL_FB: ""
+        URL_TW: ""
+        URL_INST: ""
+        URL_LK: ""
+

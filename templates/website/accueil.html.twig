@@ -1,0 +1,519 @@
+{% extends 'website/themes/base.html.twig' %}
+{% block title %}ACCUEIL |
+	{{APP_NAME}}
+{% endblock %}
+{% block body %}
+	<!-- Welcome Area Start -->
+	<section class="welcome-area" style="margin-bottom: 70px;">
+		<div
+			class="welcome-slides owl-carousel">
+			<!-- Single Welcome Slide -->
+			<div
+				class="single-welcome-slide bg-img bg-overlay" style="background-image: url({{asset('web/img/img-coco-beach-hotel7.JPG')}});" data-img-url="{{asset('web/img/img-coco-beach-hotel7.JPG')}}">
+				<!-- Welcome Content -->
+				<div class="welcome-content h-100">
+					<div class="container h-100">
+						<div
+							class="row h-100 align-items-center">
+							<!-- Welcome Text -->
+							<div class="col-12">
+								<div class="welcome-text text-center">
+									<h6 data-animation="fadeInLeft" data-delay="800ms">Hôtel Coco Beach</h6>
+									<h2 data-animation="fadeInLeft" data-delay="1500ms">Bienvenue à Coco Beach
+									</h2>
+									<a href="#reserve" class="btn roberto-btn btn-2" data-animation="fadeInLeft" data-delay="1600ms">Reserver Maintenant</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Single Welcome Slide -->
+			<div
+				class="single-welcome-slide bg-img bg-overlay" style="background-image: url({{asset('web/img/img-coco-beach-hotel1.JPG')}});" data-img-url="{{asset('web/img/img-coco-beach-hotel1.JPG')}}">
+				<!-- Welcome Content -->
+				<div class="welcome-content h-100">
+					<div class="container h-100">
+						<div
+							class="row h-100 align-items-center">
+							<!-- Welcome Text -->
+							<div class="col-12">
+								<div class="welcome-text text-center">
+									<h6 data-animation="fadeInDown" data-delay="800ms">Hôtel Coco Beach</h6>
+									<h2 data-animation="fadeInDown" data-delay="1500ms">Venez passer un agreable sejour avec nous.</h2>
+									<a href="#reserve" class="btn roberto-btn btn-2" data-animation="fadeInDown" data-delay="1600ms">J'y serai</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Single Welcome Slide -->
+			<div
+				class="single-welcome-slide bg-img bg-overlay" style="background-image: url({{asset('web/img/img-coco-beach-hotel3.JPG')}});" data-img-url="{{asset('web/img/img-coco-beach-hotel3.JPG')}}">
+				<!-- Welcome Content -->
+				<div class="welcome-content h-100">
+					<div class="container h-100">
+						<div
+							class="row h-100 align-items-center">
+							<!-- Welcome Text -->
+							<div class="col-12">
+								<div class="welcome-text text-center">
+									<h6 data-animation="fadeInUp" data-delay="800ms">Hôtel Coco Beach</h6>
+									<h2 data-animation="fadeInUp" data-delay="1500ms">Pour tout renseignement</h2>
+									<a id="reserve" href="{{path('contacteznous')}}" class="btn roberto-btn btn-2" data-animation="fadeInUp" data-delay="1600ms">Appellez Maintenant!</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Welcome Area End -->
+
+	<!-- About Us Area Start -->
+	<section
+		class="roberto-about-area section-padding-100-0">
+		<!-- Hotel Search Form Area -->
+		<div class="hotel-search-form-area">
+			<div class="container-fluid">
+				<div class="hotel-search-form">
+					<form id="reserver" action="{{path('index')}}" method="post">
+						<div class="row justify-content-between align-items-end">
+							<div class="col-6 col-md-2 col-lg-3">
+								<label for="date_arrivee">Date d'arrivée</label>
+								<input type="date" class="form-control" id="date_arrivee" name="date_arrivee">
+							</div>
+							<div class="col-6 col-md-2 col-lg-3">
+								<label for="date_depart">Date de depart</label>
+								<input type="date" class="form-control" id="date_depart" name="date_depart">
+							</div>
+							<div class="col-4 col-md-1 col-lg-3">
+								<label for="type_chambre">Type Chambre</label>
+								<select name="type_chambre" id="type_chambre" class="form-control">
+									<option value="Simple">Simple</option>
+									<option value="Double">Double</option>
+								</select>
+							</div>
+							<div class="col-4 col-md-1 col-lg-3">
+								<label for="nbre_chambre">Nombre de chambre</label>
+								<input type="number" min="1" value="1" name="nbre_chambre" id="nbre_chambre" class="form-control"/>
+							</div>
+							<div class="col-6 col-md-2 col-lg-3">
+								<label for="nom_client">Nom</label>
+								<input type="text" class="form-control" id="nom_client" name="nom_client">
+							</div>
+							<div class="col-6 col-md-2 col-lg-3">
+								<label for="prenom_client">Prenom</label>
+								<input type="text" class="form-control" id="prenom_client" name="prenom_client">
+							</div>
+							<div class="col-6 col-md-2 col-lg-3">
+								<label for="telephone_client">Telephone</label>
+								<input type="number" min="0" class="form-control" id="telephone_client" name="telephone_client" placeholder="Exemple: 22890000000">
+							</div>
+							<div class="col-6 col-md-2 col-lg-3">
+								<label for="email_client">Email</label>
+								<input type="email" class="form-control" id="email_client" value="" name="email_client">
+							</div>
+							<div class="col-12 col-md-3">
+								<button type="submit" class="form-control btn roberto-btn w-100">Je Reserve</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="container mt-100" style="margin-top: 220px;">
+			<div class="row align-items-center">
+				<div
+					class="col-12 col-lg-6">
+					<!-- Section Heading -->
+					<div class="section-heading wow fadeInUp" data-wow-delay="100ms">
+						<h6>A propos de nous</h6>
+						<h2>Soyez les bienvenue à
+							<br>Coco Beach Hôtel</h2>
+					</div>
+					<div class="about-us-content mb-100" style="margin-top: -35px;">
+						<h5 class="wow fadeInUp" data-wow-delay="300ms">Le Coco Beach Hotel est situé à Lomé, au Togo, directement sur la plage de l'Atlantique, à environ 25 minutes en voiture de l'aéroport de Lomé et offre à ses clients toutes les commodités qui rendent inoubliables des vacances ou un court voyage à la mer.Grâce à son beau complexe mature , le service attentionné, La très bonne cuisine et la situation exposée, directement sur la plage de sable fin, en font l'un des Hôtels les plus appréciés de Lomes.</h5>
+						<p class="wow fadeInUp" data-wow-delay="400ms">
+							<span></span>
+						</p>
+						{# <img src="{{asset('web/img/core-img/signature.png')}}" alt="" class="wow fadeInUp" data-wow-delay="500ms"> #}
+					</div>
+				</div>
+
+				<div class="col-12 col-lg-6">
+					<div class="about-us-thumbnail wow fadeInUp" data-wow-delay="700ms">
+						<div class="row no-gutters">
+							<div class="col-6">
+								<div class="single-thumb">
+									<img src="{{asset('web/img/img-coco-beach-hotel8.JPG')}}" height="350" alt="">
+								</div>
+								<div class="single-thumb">
+									<img src="{{asset('web/img/img-coco-beach-hotel14.JPG')}}" alt="">
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="single-thumb">
+									<img src="{{asset('web/img/img-coco-beach-hotel10.JPG')}}" alt="">
+								</div>
+								<div class="single-thumb">
+									<img src="{{asset('web/img/img-coco-beach-hotel17.JPG')}}" alt="">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- About Us Area End -->
+
+	<!-- Service Area Start -->
+	<div class="roberto-service-area" style="margin-top: 70px;">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div
+						class="service-content d-flex align-items-center justify-content-between">
+						<!-- Single Service Area -->
+						<div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="100ms">
+							<img src="{{asset('web/img/core-img/icon5.png')}}" alt="">
+							<h5>Wifi illimité</h5>
+						</div>
+
+						<!-- Single Service Area -->
+						<div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="300ms">
+							<img src="{{asset('web/img/core-img/icon1.png')}}" alt="">
+							<h5>Climatisation</h5>
+						</div>
+
+						<!-- Single Service Area -->
+						<div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="500ms">
+							<img src="{{asset('web/img/core-img/icon4.png')}}" alt="">
+							<h5>Télévision</h5>
+						</div>
+
+						<!-- Single Service Area -->
+						<div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="700ms">
+							<img src="{{asset('web/img/core-img/icon3.png')}}" alt="">
+							<h5>Restauration</h5>
+						</div>
+
+						<!-- Single Service Area -->
+						<div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="900ms">
+							<img src="{{asset('web/img/core-img/icon6.png')}}" alt="">
+							<h5>Service 24/24</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Service Area End -->
+
+	<!-- Our Room Area Start -->
+	{# <section class="roberto-rooms-area">
+																																																																																							<div
+																																																																																								class="rooms-slides owl-carousel">
+																																																																																								<!-- Single Room Slide -->
+																																																																																								<div
+																																																																																									class="single-room-slide d-flex align-items-center">
+																																																																																									<!-- Thumbnail -->
+																																																																																									<div class="room-thumbnail h-100 bg-img" style="background-image: url({{asset('web/img/bg-img/16.jpg')}});"></div>
+																																																																																					
+																																																																																									<!-- Content -->
+																																																																																									<div class="room-content">
+																																																																																										<h2 data-animation="fadeInUp" data-delay="100ms">Premium King Room</h2>
+																																																																																										<h3 data-animation="fadeInUp" data-delay="300ms">400$
+																																																																																											<span>/ Day</span>
+																																																																																										</h3>
+																																																																																										<ul class="room-feature" data-animation="fadeInUp" data-delay="500ms">
+																																																																																											<li>
+																																																																																												<span>
+																																																																																													<i class="fa fa-check"></i>
+																																																																																													Size</span>
+																																																																																												<span>: 30 ft</span>
+																																																																																											</li>
+																																																																																											<li>
+																																																																																												<span>
+																																																																																													<i class="fa fa-check"></i>
+																																																																																													Capacity</span>
+																																																																																												<span>: Max persion 5</span>
+																																																																																											</li>
+																																																																																											<li>
+																																																																																												<span>
+																																																																																													<i class="fa fa-check"></i>
+																																																																																													Bed</span>
+																																																																																												<span>: King Beds</span>
+																																																																																											</li>
+																																																																																											<li>
+																																																																																												<span>
+																																																																																													<i class="fa fa-check"></i>
+																																																																																													Services</span>
+																																																																																												<span>: Wifi, Television, Bathroom</span>
+																																																																																											</li>
+																																																																																										</ul>
+																																																																																										<a href="#" class="btn roberto-btn mt-30" data-animation="fadeInUp" data-delay="700ms">View Details</a>
+																																																																																									</div>
+																																																																																								</div>
+																																																																																					
+																																																																																								<!-- Single Room Slide -->
+																																																																																								<div
+																																																																																									class="single-room-slide d-flex align-items-center">
+																																																																																									<!-- Thumbnail -->
+																																																																																									<div class="room-thumbnail h-100 bg-img" style="background-image: url({{asset('web/img/bg-img/17.jpg')}});"></div>
+																																																																																					
+																																																																																									<!-- Content -->
+																																																																																									<div class="room-content">
+																																																																																										<h2 data-animation="fadeInUp" data-delay="100ms">Best King Room</h2>
+																																																																																										<h3 data-animation="fadeInUp" data-delay="300ms">125$
+																																																																																											<span>/ Day</span>
+																																																																																										</h3>
+																																																																																										<ul class="room-feature" data-animation="fadeInUp" data-delay="500ms">
+																																																																																											<li>
+																																																																																												<span>
+																																																																																													<i class="fa fa-check"></i>
+																																																																																													Size</span>
+																																																																																												<span>: 30 ft</span>
+																																																																																											</li>
+																																																																																											<li>
+																																																																																												<span>
+																																																																																													<i class="fa fa-check"></i>
+																																																																																													Capacity</span>
+																																																																																												<span>: Max persion 5</span>
+																																																																																											</li>
+																																																																																											<li>
+																																																																																												<span>
+																																																																																													<i class="fa fa-check"></i>
+																																																																																													Bed</span>
+																																																																																												<span>: King Beds</span>
+																																																																																											</li>
+																																																																																											<li>
+																																																																																												<span>
+																																																																																													<i class="fa fa-check"></i>
+																																																																																													Services</span>
+																																																																																												<span>: Wifi, Television, Bathroom</span>
+																																																																																											</li>
+																																																																																										</ul>
+																																																																																										<a href="#" class="btn roberto-btn mt-30" data-animation="fadeInUp" data-delay="700ms">View Details</a>
+																																																																																									</div>
+																																																																																								</div>
+																																																																																							</div>
+																																																																																						</section> #}
+	<!-- Our Room Area End -->
+
+	<!-- Testimonials Area Start -->
+		{% if temoignages %}
+			<section class="roberto-testimonials-area section-padding-100-0" style="margin-top: -65px;"> <div class="container">
+				<div class="row align-items-center">
+					<div
+						class="col-12 col-md-12">
+						<!-- Section Heading -->
+						<div class="section-heading">
+							<h6>Témoignages</h6>
+							<h2>Nos invités nous aiment</h2>
+						</div>
+						<!-- Testimonial Slide -->
+
+						<div
+							class="testimonial-slides owl-carousel mb-100">
+							<!-- Single Testimonial Slide -->
+							{% for temoignage in temoignages %}
+								<div class="single-testimonial-slide">
+									<h5>“{{temoignage.message}}”</h5>
+									<div class="rating-title">
+										<div class="rating">
+											{% if temoignage.note == 5 %}
+												<i class="icon_star"></i>
+												<i class="icon_star"></i>
+												<i class="icon_star"></i>
+												<i class="icon_star"></i>
+												<i class="icon_star"></i>
+											{% elseif temoignage.note == 4 %}
+												<i class="icon_star"></i>
+												<i class="icon_star"></i>
+												<i class="icon_star"></i>
+												<i class="icon_star"></i>
+											{% elseif temoignage.note == 3 %}
+												<i class="icon_star"></i>
+												<i class="icon_star"></i>
+												<i class="icon_star"></i>
+											{% elseif temoignage.note == 2 %}
+												<i class="icon_star"></i>
+												<i class="icon_star"></i>
+											{% elseif temoignage.note == 1 %}
+												<i class="icon_star"></i>
+											{% endif %}
+										</div>
+										<h6>{{temoignage.client}}
+											<span></span>
+										</h6>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+
+					</div>
+				</div>
+			</section>
+		{% endif %}
+		<!-- Testimonials Area End -->
+
+
+		<!-- Blog Area Start -->
+		<section class="roberto-blog-area section-padding-100-0" style="margin-top: -65px;margin-bottom: 35px;">
+			<div class="container">
+				<div
+					class="row">
+					<!-- Section Heading -->
+					<div class="col-12">
+						<div class="section-heading text-center wow fadeInUp" data-wow-delay="100ms">
+							<h6>Hôtel Coco Beach</h6>
+							<h2>Nos Chambres</h2>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					{% for chambre in chambres %}
+						<!-- Single Room Area -->
+						<div class="col-12 col-lg-6">
+							<div
+								class="single-room-area d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="300ms">
+								<!-- Room Thumbnail -->
+								<div class="room-thumbnail">
+									{% if chambre.imagechambre %}
+										<img src="{{ asset("/upload_images/" ~ chambre.imagechambre) }}" title="{{ chambre.libellechambre }}" alt="{{ chambre.libellechambre }}">
+									{% else %}
+										<img src="{{asset('web/img/img-coco-beach-hotel1.JPG')}}" title="{{ chambre.libellechambre }}" alt="{{ chambre.libellechambre }}"/>
+									{% endif %}
+								</div>
+								<!-- Room Content -->
+								<div class="room-content">
+									<h6>{{chambre.libellechambre}}</h6>
+									<h5>{{chambre.prixchambre}}
+										FCFA
+										<span>/ Jour</span>
+									</h5>
+									<div class="room-feature">
+										<h6>Description :
+											<span>{{chambre.descriptionchambre|slice(0, 30)}}
+												...</span>
+										</h6>
+									</div>
+									<a href="{{path('chambres.detail', {id: chambre.id})}}" class="btn view-detail-btn">Voir les détails
+										<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+						<!-- Single Room Area -->
+					{% endfor %}
+				</div>
+
+				<!-- Pagination -->
+				<div class="row">
+					<div class="col-12 col-lg-6">
+						<nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="1000ms">
+							{{knp_pagination_render(chambres)}}
+						</nav>
+					</div>
+				</div>
+			</div>
+
+		</section>
+		<!-- Blog Area End -->
+
+		<!-- Blog Area Start -->
+
+		<section class="roberto-blog-area section-padding-100-0" style="margin-top: -85px;margin-bottom: 100px;">
+			<div class="container">
+				<div
+					class="row">
+					<!-- Section Heading -->
+					<div class="col-12">
+						<div class="section-heading text-center wow fadeInUp" data-wow-delay="100ms">
+							<h6>Hôtel Coco Beach</h6>
+							<h2>Nos evenements</h2>
+						</div>
+					</div>
+				</div>
+				{% if evenements|length > 0 %}
+					<div class="row">
+						{% for evenement in evenements %}
+							<div class="col-12 col-lg-4" style="margin-bottom: 35px;">
+								<a
+									href="{{ asset("/upload_images/" ~ evenement.image) }}" title="{{ evenement.titreevent }}" alt="{{ evenement.titreevent }}" data-lightbox="mygallery">
+									{# <img src="{{ asset('web/img/event2.jpeg') }}" alt=""/> #}
+									{% if evenement.image %}
+										<img src="{{ asset("/upload_images/" ~ evenement.image) }}" title="{{ evenement.titreevent }}" alt="{{ evenement.titreevent }}">
+									{% endif %}
+								</a>
+							</div>
+						{% endfor %}
+
+						{# <div class="col-12 col-lg-4" style="margin-bottom: 45px;">
+												<a href="{{ asset('web/img/event1.jpeg') }}" data-lightbox="mygallery">
+													<img src="{{ asset('web/img/event1.jpeg') }}" alt=""/>
+												</a>
+											</div> #}
+					</div>
+					<!-- Pagination -->
+				{% endif %}
+			</div>
+
+		</section>
+		<!-- Blog Area End -->
+
+		<!-- Call To Action Area Start -->
+		<section class="roberto-cta-area" style="margin-bottom: 100px;">
+			<div class="container">
+				<div class="cta-content bg-img bg-overlay jarallax" style="background-image: url({{asset('web/img/img-coco-beach-hotel10.JPG')}});">
+					<div class="row align-items-center">
+						<div class="col-12 col-md-7">
+							<div class="cta-text mb-50">
+								<h2>Contactez-nous Maintenant!</h2>
+								<h6>Contactez-nous au
+									{{COMPANY_PHONE}}
+									pour reserver une chambre de votre choix</h6>
+							</div>
+						</div>
+						<div class="col-12 col-md-5 text-right">
+							<a href="{{path('contacteznous')}}" class="btn roberto-btn mb-50">Contactez Maintenant</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- Call To Action Area End -->
+
+	<!-- Partner Area Start -->
+		{# <div class="partner-area">
+																																																																																																																																											<div class="container">
+																																																																																																																																												<div class="row">
+																																																																																																																																													<div class="col-12">
+																																																																																																																																														<div
+																																																																																																																																															class="partner-logo-content d-flex align-items-center justify-content-between wow fadeInUp" data-wow-delay="300ms">
+																																																																																																																																															<!-- Single Partner Logo -->
+																																																																																																																																															<a href="#" class="partner-logo"><img src="{{asset('web/img/core-img/p1.png')}}" alt=""></a>
+																																																																																																																																															<!-- Single Partner Logo -->
+																																																																																																																																															<a href="#" class="partner-logo"><img src="{{asset('web/img/core-img/p2.png')}}" alt=""></a>
+																																																																																																																																															<!-- Single Partner Logo -->
+																																																																																																																																															<a href="#" class="partner-logo"><img src="{{asset('web/img/core-img/p3.png')}}" alt=""></a>
+																																																																																																																																															<!-- Single Partner Logo -->
+																																																																																																																																															<a href="#" class="partner-logo"><img src="{{asset('web/img/core-img/p4.png')}}" alt=""></a>
+																																																																																																																																															<!-- Single Partner Logo -->
+																																																																																																																																															<a href="#" class="partner-logo"><img src="{{asset('web/img/core-img/p5.png')}}" alt=""></a>
+																																																																																																																																														</div>
+																																																																																																																																													</div>
+																																																																																																																																												</div>
+																																																																																																																																											</div>
+																																																																																																																																										</div> #}
+		<!-- Partner Area End -->
+
+	{% endblock %}

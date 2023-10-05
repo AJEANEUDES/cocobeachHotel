@@ -1,0 +1,114 @@
+{% extends 'dashboard/themes/base.html.twig' %}
+
+{% block title %}CHAMBRES |
+	{{APP_NAME}}
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<div class="page-title-right">
+						<a class="btn btn-primary btn-lg" href="{{path('chambres.get')}}">Liste des chambres</a>
+						<a class="btn btn-primary btn-lg" href="{{path('categories.create')}}">Creer une categorie</a>
+					</div>
+					<h4 class="page-title">Gestion des chambres</h4>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-2"></div>
+			<div class="col-lg-8">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="header-title" style="text-align: center;margin: 30px 0 30px 0;font-size: 30px;">Ajout d'une nouvelle chambre</h4>
+						<form id="create-chambre" action="{{path('chambres.create')}}" method="POST" enctype="multipart/form-data">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label for="categorie" class="form-label">Selectionnez la categorie<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<select id="categorie" name="categorie" class="form-control form-control-lg select2" data-toggle="select2">
+											<option disabled selected>-- Categorie --</option>
+											{% for category in categories %}
+												<option value="{{category.id}}">{{category.libelle}}</option>
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label for="num_chambre" class="form-label">Numero chambre
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<input type="text" id="num_chambre" name="num_chambre" class="form-control form-control-lg" placeholder="Saisir le numero de chambre">
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label for="libelle_chambre" class="form-label">Libelle chambre
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<input type="text" id="libelle_chambre" name="libelle_chambre" class="form-control form-control-lg" placeholder="Saisir le nom de chambre">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="mb-3">
+										<label for="prix_chambre" class="form-label">Prix chambre /Jour
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<input type="text" id="prix_chambre" name="prix_chambre" class="form-control form-control-lg" placeholder="Saisir le prix de chambre">
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12 mb-3">
+									<label for="image_chambre" class="form-label">Image de la chambre</label>
+									<input type="file" class="form-control form-control-lg" name="image_chambre" id="image_chambre"/>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-3 mb-3">
+									<label for="image_chambre1" class="form-label">Image 1</label>
+									<input type="file" class="form-control form-control-lg" name="image_chambre1" id="image_chambre1"/>
+								</div>
+								<div class="col-md-3 mb-3">
+									<label for="image_chambre2" class="form-label">Image 2</label>
+									<input type="file" class="form-control form-control-lg" name="image_chambre2" id="image_chambre2"/>
+								</div>
+								<div class="col-md-3 mb-3">
+									<label for="image_chambre3" class="form-label">Image 3</label>
+									<input type="file" class="form-control form-control-lg" name="image_chambre3" id="image_chambre3"/>
+								</div>
+								<div class="col-md-3 mb-3">
+									<label for="image_chambre4" class="form-label">Image 4</label>
+									<input type="file" class="form-control form-control-lg" name="image_chambre4" id="image_chambre4"/>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12">
+									<label for="description_chambre" class="form-label">Description de la chambre</label>
+									<textarea class="form-control form-control-lg" name="description_chambre" id="description_chambre" rows="4"></textarea>
+								</div>
+							</div>
+
+							<p>NB : Les champs avec (<span style="font-size: 18px;color: red;">*</span>) sont obligatoires</p>
+							<div class="text-end">
+								<button type="submit" class="btn btn-primary btn-lg">Enregistrer une chambre</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

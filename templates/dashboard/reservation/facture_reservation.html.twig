@@ -1,0 +1,194 @@
+{% extends 'dashboard/themes/base.html.twig' %}
+
+{% block title %}FACTURE |
+	{{APP_NAME}}
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<div class="page-title-right">
+						<a class="btn btn-primary btn-lg" href="{{path('reservations.get')}}">Liste des reservations</a>
+					</div>
+					<h4 class="page-title">Facture</h4>
+				</div>
+			</div>
+		</div>
+		<!-- end row -->
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="card">
+					<div
+						class="card-body">
+
+						<!-- Invoice Logo-->
+						<div class="row">
+							<div class="col-lg-8 float-start mb-3">
+								<img src="{{asset('assets/images/logo-coco-beach.jpeg')}}" alt="" height="50">
+							</div>
+							<div class="col-lg-4 float-end">
+								<h4 class="m-0 d-print-none">Facture</h4>
+							</div>
+						</div>
+
+						<!-- Invoice Detail-->
+						<div class="row mt-4">
+							<div class="col-sm-4"></div>
+							<div class="col-sm-4"></div>
+							<!-- end col-->
+
+							<div class="col-sm-4 text-end">
+								<h4>Date de reservation :
+									{{facture.datecreation|date('d/m/Y')}}</h4>
+								{# <h4>Status de reservation : Payée</h4> #}
+								<h4>N° de reservation : #RES-{{facture.codereservation}}</h4>
+							</div>
+							<!-- end col-->
+							<!-- end col-->
+						</div>
+						<!-- end row -->
+
+						<div class="row mt-4">
+							<div class="col-sm-4">
+								<h4>Information hotel coco beach</h4>
+								<h4>Lomé-Togo, sur l'atlantique</h4>
+								<h4></h4>
+								<h4>{{COMPANY_PHONE}}</h4>
+							</div>
+							<!-- end col-->
+
+							<div class="col-sm-4 text-end">
+								<h4>Information client</h4>
+								<h4 style="text-transform: capitalize;">{{facture.client.nomclient}}
+									{{facture.client.prenomclient}}</h4>
+								<h4>{{facture.client.telephoneclient}}</h4>
+							</div>
+							<!-- end col-->
+							<!-- end col-->
+						</div>
+						<!-- end row -->
+
+						<div class="row">
+							<div class="col-12">
+								<div class="table-responsive">
+									<table class="table mt-4">
+										<thead>
+											<tr>
+												<th>#Code</th>
+												<th>Designation</th>
+												<th>Duree</th>
+												<th>Prix Unitaire</th>
+												<th class="text-end">Total</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>#RES-{{facture.codereservation}}</td>
+												<td>
+													<b>{{facture.chambre.libellechambre}}</b>
+													<br>
+													Numero de chambre
+													{{facture.chambre.matriculechambre}}
+												</td>
+												<td>
+													{% if facture.dureetotal %}
+														{{facture.dureetotal}}
+													{% else %}
+														{% if facture.dureereservation <= 1 %}
+															{{facture.dureereservation}}
+															Jour
+														{% else %}
+															{{facture.dureereservation}}
+															Jours
+														{% endif %}
+													{% endif %}
+												</td>
+												<td>{{facture.chambre.prixchambre}}
+												</td>
+												<td class="text-end">
+													{% if facture.dureetotal %}
+														{{facture.chambre.prixchambre * facture.dureetotal}}
+													{% else %}
+														{{facture.chambre.prixchambre * facture.dureereservation}}
+													{% endif %}
+												</td>
+											</tr>
+											{% if services %}
+												<tr>
+													<td style="font-weight: 600;font-size: 22px;">Les autres services</td>
+												</tr>
+												{% for service in services %}
+													<tr>
+														<td>#-HCB{{loop.index}}</td>
+														<td>{{service.libelleservice}}</td>
+														<td>-</td>
+														<td>{{service.prixservice}}</td>
+														<td class="text-end">{{service.prixservice}}</td>
+													</tr>
+												{% endfor %}
+											{% endif %}
+										</tbody>
+									</table>
+								</div>
+								<!-- end table-responsive-->
+							</div>
+							<!-- end col -->
+						</div>
+						<!-- end row -->
+
+						<div class="row">
+							<div class="col-sm-6">
+								<div
+									class="clearfix pt-3">{# <h6 class="text-muted">Notes:</h6>
+																																																																																																																																																																																																																											<small>Merci de nous avoir fait confiance</small> #}
+								</div>
+							</div>
+							<!-- end col -->
+							<div class="col-sm-6">
+								<div class="float-end mt-3 mt-sm-0">
+									<p>
+										<b>Total à payer : </b>
+										<span class="float-end">
+											{% if facture.dureetotal %}
+												{{facture.chambre.prixchambre * facture.dureetotal + totalFinal}}
+											{% else %}
+												{{facture.chambre.prixchambre * facture.dureereservation + totalFinal}}
+											{% endif %}
+											FCFA</span>
+									</p>
+									{# <p>
+																																																																																																																																																																																																							<b>VAT (12.5):</b>
+																																																																																																																																																																																																							<span class="float-end">$515.00</span>
+																																																																																																																																																																																																						</p> #}
+									{# <h3>$4635.00 USD</h3> #}
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<!-- end col -->
+						</div>
+						<!-- end row-->
+
+						<div class="d-print-none mt-4">
+							<div class="text-end">
+								<a href="javascript:window.print()" class="btn btn-primary">
+									<i class="mdi mdi-printer"></i>
+									Imprimer</a>
+								{# <a href="javascript: void(0);" class="btn btn-info">Submit</a> #}
+							</div>
+						</div>
+						<!-- end buttons -->
+
+					</div>
+					<!-- end card-body-->
+				</div>
+				<!-- end card -->
+			</div>
+			<!-- end col-->
+		</div>
+	</div>
+{% endblock %}

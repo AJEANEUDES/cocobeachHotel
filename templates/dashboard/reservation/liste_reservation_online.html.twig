@@ -1,0 +1,106 @@
+{% extends 'dashboard/themes/base.html.twig' %}
+
+{% block title %}RESERVATIONS |
+	{{APP_NAME}}
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<div class="page-title-right">
+						<a class="btn btn-primary btn-lg" href="{{path('reservations.create')}}">Creer une reservation</a>
+					</div>
+					<h4 class="page-title">Gestion des reservations en ligne</h4>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="header-title" style="text-align: center;margin: 20px 0 10px 0;font-size: 25px;">Liste des reservations en ligne</h4>
+						<table id="selection-datatable" class="table dt-responsive nowrap w-100">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>TYPE CHAMBRE</th>
+									<th>NOMBRE DE PERSONNE</th>
+									<th>DATE D'ARRIVEE</th>
+									<th>DUREE</th>
+									<th>DATE DE DEPART</th>
+									<th>ETAT</th>
+									<th>DATE CREATION</th>
+									<th>ACTIONS</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for reservation in onlines %}
+									<tr>
+										<td>{{loop.index}}</td>
+										<td>
+											{% if reservation.nombreadulte %}
+												{{reservation.nombreadulte}}
+											{% endif %}
+										</td>
+										<td>
+											{{reservation.nombrechambre}}
+										</td>
+										<td>{{reservation.datearrivee}}</td>
+										{% if reservation.dureetotal %}
+											{% if reservation.dureetotal <= 1 %}
+												<td>{{reservation.dureetotal}}
+													Jour</td>
+											{% else %}
+												<td>{{reservation.dureetotal}}
+													Jours</td>
+											{% endif %}
+										{% else %}
+											{% if reservation.dureereservation <= 1 %}
+												<td>{{reservation.dureereservation}}
+													Jour</td>
+											{% else %}
+												<td>{{reservation.dureereservation}}
+													Jours</td>
+											{% endif %}
+										{% endif %}
+										{% if reservation.newdatedepart %}
+											<td>{{reservation.newdatedepart}}</td>
+										{% else %}
+											<td>{{reservation.datedepart}}</td>
+										{% endif %}
+										{% if reservation.etatreservation == 0 %}
+											<td>
+												<span class="badge bg-danger rounded-pill">ANNULEE</span>
+											</td>
+										{% elseif reservation.etatreservation == 1 %}
+											<td>
+												<span class="badge bg-warning rounded-pill">EN ATTENTE</span>
+											</td>
+										{% endif %}
+										<td>
+											{{reservation.datecreation|date('d/m/Y')}}
+											à
+											{{reservation.datecreation|date('H:s:i')}}
+										</td>
+										<td>
+											<form style="display: inline-block;" action="{{path('onlines.update', {id: reservation.id})}}" method="POST">
+												<input type="hidden" name="etat"/>
+												<button type="submit" class="btn btn-primary">Annuler</button>
+											</form>
+
+											<button class="btn btn-success">
+												<a style="color: #fff;" href="{{path('reservations.create')}}">Valider</a>
+											</button>
+										</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

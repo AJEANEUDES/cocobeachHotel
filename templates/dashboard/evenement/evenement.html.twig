@@ -1,0 +1,193 @@
+{% extends 'dashboard/themes/base.html.twig' %}
+
+{% block title %}EVENEMENT |
+	{{APP_NAME}}
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<div
+						class="page-title-right">{# <a class="btn btn-primary btn-lg" href="#"></a> #}
+					</div>
+					<h4 class="page-title">Gestion des evenements</h4>
+				</div>
+			</div>
+		</div>
+		<!-- end page title -->
+
+		<!-- end page title -->
+		<div class="row">
+			<div class="col-lg-4">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="header-title" style="text-align: center;margin: 30px 0 30px 0;font-size: 30px;">Ajout d'un nouveau evenement</h4>
+						<form id="create-evenement" action="{{path('evenements.create')}}" method="POST" enctype="multipart/form-data">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label for="client" class="form-label">Nom de l'evenement
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<input type="text" id="titre_event" name="titre_event" class="form-control form-control-lg"/>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label for="client" class="form-label">Date de l'evenement
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<input type="date" id="date_event" name="date_event" class="form-control form-control-lg" required/>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label for="client" class="form-label">Image de l'evenement
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<input type="file" id="image_event" name="image_event" class="form-control form-control-lg" required/>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="mb-3">
+										<label for="message" class="form-label">Description de l'evenement
+											<span style="font-size: 18px;color: red;">*</span>
+										</label>
+										<textarea id="description_event" name="description_event" rows="4" class="form-control form-control-lg"></textarea>
+									</div>
+								</div>
+							</div>
+							<div class="text-end">
+								<button type="submit" class="btn btn-primary btn-lg">Enregistrer l'evenement</button>
+							</div>
+						</form>
+					</div>
+					<!-- end card-body -->
+				</div>
+				<!-- end card -->
+			</div>
+			<!-- end col -->
+			<div class="col-lg-8">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="header-title" style="text-align: center;margin: 20px 0 10px 0;font-size: 25px;">Liste des evenements</h4>
+						<table id="basic-datatable" class="table dt-responsive nowrap w-100">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>IMAGE</th>
+									<th>NOM</th>
+									<th>DATE</th>
+									<th>DESCRIPTION</th>
+									<th>ACTIONS</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for evenement in evenements %}
+									<tr>
+										<td>{{ loop.index }}</td>
+										<td>
+											{% if evenement.image %}
+												<img height="60" src="{{ asset("/upload_images/" ~ evenement.image) }}" title="{{ evenement.titreevent }}" alt="{{ evenement.titreevent }}">
+											{% endif %}
+										</td>
+										<td>{{ evenement.titreevent }}</td>
+										<td>{{ evenement.dateevent }}</td>
+										<td>{{ evenement.descriptionevent|slice(0, 19) }}...</td>
+										<td>
+											{# <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#send-temoignage">
+																																		<i class="mdi mdi-comment"></i>
+																																	</button> #}
+
+											<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#info-evenement-{{ evenement.id }}">
+												<i class="mdi mdi-eye"></i>
+											</button>
+
+											<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-evenement-{{ evenement.id }}">
+												<i class="mdi mdi-delete"></i>
+											</button>
+										</td>
+									</tr>
+
+									<div class="modal fade" id="delete-evenement-{{ evenement.id }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-md">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="mySmallModalLabel">SUPPRESSION D'UN EVENEMENT</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+												</div>
+												<div class="modal-body">
+													<div class="row">
+														<div class="col-md-12 mb-2">
+															Etes vous sur de vouloir supprimer cet evenement ?
+														</div>
+														<div class="col-md-8"></div>
+														<div class="col-md-4">
+															<form id="" method="POST" action="{{path('evenements.delete', {id: evenement.id})}}" style="display: inline-block;">
+																<div class="row">
+																	<div class="col-md-12 text-center mt-3">
+																		<button type="submit" class="btn btn-danger">Supprimer</button>
+																	</div>
+																</div>
+															</form>
+														</div>
+													</div>
+
+												</div>
+
+											</div>
+										</div>
+									</div>
+
+
+									<div class="modal fade task-modal-content" id="info-evenement-{{evenement.id}}" tabindex="-1" role="dialog" aria-labelledby="NewTaskModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered modal-md">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="NewTaskModalLabel">INFORMATION D'UN EVENEMENT</h4>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<div class="card text-center">
+														<div class="card-body">
+															<div class="text-start mt-3">
+																<h4 class="text-muted mb-2">
+																	{% if evenement.image %}
+																		<img height="400" width="420" src="{{ asset("/upload_images/" ~ evenement.image) }}" title="{{ evenement.titreevent }}" alt="{{ evenement.titreevent }}">
+																	{% endif %}
+																</h4>
+																<h4 class="text-muted mb-1">
+																	<strong>Nom de l'evenement :</strong>
+																	<span class="ms-2">{{evenement.titreevent}}</span>
+																</h4>
+																<h4 class="text-muted mb-1">
+																	<strong>Description :</strong>
+																	<span class="ms-2">{{ evenement.descriptionevent }}</span>
+																</h4>
+																<h4 class="text-muted mb-1">
+																	<strong>Date de l'evenement :</strong>
+																	<span class="ms-2">{{evenement.dateevent}}</span>
+																</h4>
+															</div>
+														</div>
+														<!-- end card-body -->
+													</div>
+													<!-- end card -->
+												</div>
+											</div>
+											<!-- /.modal-content -->
+										</div>
+										<!-- /.modal-dialog -->
+									</div>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end row -->
+	</div>
+{% endblock %}

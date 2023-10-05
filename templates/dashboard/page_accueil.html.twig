@@ -1,0 +1,126 @@
+{% extends 'dashboard/themes/base.html.twig' %}
+
+{% block title %}TABLEAU DE BORD |
+	{{APP_NAME}}
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<h4 class="page-title">Statistique</h4>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="card tilebox-one">
+					<div class="card-body">
+						<i class="dripicons-basket float-end text-muted"></i>
+						{% if countChbres.getCountChambres|length <= 1 %}
+							<h6 class="text-muted text-uppercase mt-0">Chambre</h6>
+						{% else %}
+							<h6 class="text-muted text-uppercase mt-0">Chambres</h6>
+						{% endif %}
+						<h2 class="m-b-20">{{countChbres.getCountChambres|length}}</h2>
+						{# <span class="badge bg-primary">100%</span>
+						<span class="text-muted">Période actuelle</span> #}
+					</div>
+					<!-- end card-body-->
+				</div>
+				<!--end card-->
+			</div>
+			<!-- end col -->
+
+			<div class="col-sm-3">
+				<div class="card tilebox-one">
+					<div class="card-body">
+						<i class="dripicons-box float-end text-muted"></i>
+						{% if countChbresLib.getCountChambresLibres|length <= 1 %}
+							<h6 class="text-muted text-uppercase mt-0">Chambre Libre</h6>
+						{% else %}
+							<h6 class="text-muted text-uppercase mt-0">Chambres Libres</h6>
+						{% endif %}
+						<h2 class="m-b-20">
+							{{countChbresLib.getCountChambresLibres|length}}
+						</h2>
+						{# <span class="badge bg-primary">
+							{{(countChbresLib.getCountChambresLibres|length * 100 / countChbres.getCountChambres|length)|round(2, 'floor')}}%
+						</span>
+						<span class="text-muted">Période actuelle</span> #}
+					</div>
+					<!-- end card-body-->
+				</div>
+				<!--end card-->
+			</div>
+			<!-- end col -->
+
+			<div class="col-sm-3">
+				<div class="card tilebox-one">
+					<div class="card-body">
+						<i class="dripicons-jewel float-end text-muted"></i>
+						{% if countChbresOccup.getCountChambresOccupees|length %}
+							<h6 class="text-muted text-uppercase mt-0">
+								Chambre Occupée
+							</h6>
+						{% else %}
+							<h6 class="text-muted text-uppercase mt-0">
+								Chambres Occupées
+							</h6>
+						{% endif %}
+						<h2 class="m-b-20">{{countChbresOccup.getCountChambresOccupees|length}}</h2>
+						{# <span class="badge bg-primary">
+							{{(countChbresOccup.getCountChambresOccupees|length * 100 / countChbres.getCountChambres|length)|round(2, 'floor')}}%
+						</span>
+						<span class="text-muted">Période actuelle</span> #}
+					</div>
+					<!-- end card-body-->
+				</div>
+				<!--end card-->
+			</div>
+			<!-- end col -->
+
+			<div class="col-sm-3">
+				<div class="card tilebox-one">
+					<div class="card-body">
+						<i class="dripicons-jewel float-end text-muted"></i>
+						{% if countReserv.getCountReservations|length <= 1 %}
+							<h6 class="text-muted text-uppercase mt-0">Reservation</h6>
+						{% else %}
+							<h6 class="text-muted text-uppercase mt-0">Reservations</h6>
+						{% endif %}
+						<h2 class="m-b-20">{{countReserv.getCountReservations|length}}</h2>
+						{# <span class="badge bg-primary"></span>
+						<span class="text-muted">Période actuelle</span> #}
+					</div>
+					<!-- end card-body-->
+				</div>
+				<!--end card-->
+			</div>
+			<!-- end col -->
+
+			<div class="col-sm-3">
+				<div class="card tilebox-one">
+					<div class="card-body">
+						<i class="dripicons-jewel float-end text-muted"></i>
+						{% if countEvent.getCountEvenements|length <= 1 %}
+							<h6 class="text-muted text-uppercase mt-0">Evenement</h6>
+						{% else %}
+							<h6 class="text-muted text-uppercase mt-0">Evenements</h6>
+						{% endif %}
+						<h2 class="m-b-20">{{countEvent.getCountEvenements|length}}</h2>
+						{# <span class="badge bg-primary"></span>
+						<span class="text-muted">Période actuelle</span> #}
+					</div>
+					<!-- end card-body-->
+				</div>
+				<!--end card-->
+			</div>
+			<!-- end col -->
+
+		</div>
+		<!-- end row -->
+	</div>
+{% endblock %}
